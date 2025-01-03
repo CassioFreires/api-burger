@@ -5,10 +5,14 @@ import promotionsRouter from './routers/routers.promotions';
 import cors from 'cors';
 import combosRouter from './routers/routers-combos';
 import drinksRouter from './routers/routers-drinks';
+import authRouter from './routers/auth.router';
+import env from 'dotenv'
 
 const db = new DataBase();
 const app = express();
 const port: number = 3000;
+
+env.config();
 
 app.use(cors())
 app.use(express.json());
@@ -18,6 +22,7 @@ app.use('/burger', burgerRouter);
 app.use('/promotions', promotionsRouter);
 app.use('/combos', combosRouter);
 app.use('/drinks', drinksRouter);
+app.use('/auth', authRouter);
 
 
 db.connect()
