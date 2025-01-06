@@ -8,30 +8,38 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
+const dto_auth_1 = __importDefault(require("../dtos/Auth/dto-auth"));
+const service_login_1 = __importDefault(require("../services/service-login"));
 class AuthController {
-    login(req, res) {
-        return __awaiter(this, void 0, void 0, function* () {
-            try {
-                // const loginDto = new LoginDto(req.body.email, req.body.password);
-                // const response = await authService.login(loginDto);
-                // res.json(response);
-            }
-            catch (error) {
-                // res.status(400).json({ message: error.message });
-            }
-        });
+    constructor() {
+        this.authService = new service_login_1.default();
     }
-    register(req, res) {
+    auth(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                // const { email, password, name, role_id } = req.body;
-                // const userDto = new CreateUserDto(email, password, name, role_id);
-                // const response = await authService.register(userDto);
-                // res.json(response);
+                const { email, password } = req.body;
+                if (!email || !password) {
+                    return res.json({ message: 'Invalid Login', status: 401 });
+                }
+                const loginDto = new dto_auth_1.default(email, password);
+                const response = yield this.authService.auth(loginDto);
+                // Se a resposta for válida, retorne sucesso
+                if (response) {
+                    return res.json({ message: 'login OK', status: 201 });
+                }
+                else {
+                    // Se não for válida (por exemplo, se a resposta for null), trate o erro
+                    return res.json({ message: 'Invalid credentials', status: 401 });
+                }
             }
             catch (error) {
-                // res.status(400).json({ message: error.message });
+                // Lidar com erros de forma consistente
+                console.error(error);
+                return res.status(500).json({ message: 'Internal Server Error', status: 500 });
             }
         });
     }

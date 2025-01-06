@@ -6,10 +6,10 @@ const authRouter = express.Router();
 const authController = new AuthController();
 
 authRouter.post('/login', async(req:Request, res: Response): Promise<any> => {
-    return await authController.login(req, res)
+    return await authController.auth(req, res)
 });
-authRouter.post('/register', async(req: Request, res:Response): Promise<any> => {
-    return await authController.register(req, res);
-});
+// authRouter.post('/register', async(req: Request, res:Response): Promise<any> => {
+//     return await authController.register(req, res);
+// });
 
 export default authRouter;

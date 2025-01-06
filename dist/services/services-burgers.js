@@ -22,22 +22,26 @@ class ServiceBurger {
     constructor() {
         this.dataBase = new DataBase_1.default();
     }
-    createService(burger) {
+    createService(createBurgerDTO) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                console.log(burger);
                 const burgersRepository = (yield this.dataBase.connect()).getRepository(entities_burgers_create_1.default);
-                return yield burgersRepository.save(burger);
+                const newBurguers = new entities_burgers_create_1.default();
+                newBurguers.name = createBurgerDTO.name;
+                newBurguers.description = createBurgerDTO.description;
+                newBurguers.price = createBurgerDTO.price;
+                newBurguers.image_url = createBurgerDTO.image_url;
+                return yield burgersRepository.save(newBurguers);
             }
             catch (error) {
                 console.error('failed error create burger:', error);
                 if (error instanceof typeorm_1.QueryFailedError) {
-                    console.log(error.message);
-                    return null;
+                    console.error('Error saving hamburguer to database:', error.message);
+                    throw new Error('Failed to create hamburguer');
                 }
                 else {
-                    console.error('unexpected error  error create burger:', error);
-                    throw null;
+                    console.error('Unexpected error in createService:', error);
+                    throw new Error('Unexpected error occurred');
                 }
             }
         });
@@ -53,14 +57,14 @@ class ServiceBurger {
                 return burgers;
             }
             catch (error) {
-                console.error('Failed to all burger');
+                console.error('failed error find burger:', error);
                 if (error instanceof typeorm_1.QueryFailedError) {
-                    console.log(error.message);
-                    return null;
+                    console.error('Error find hamburguer to database:', error.message);
+                    throw new Error('Failed to find all hamburguers');
                 }
                 else {
-                    console.error('unexpected error find all burgers:', error);
-                    throw null;
+                    console.error('Unexpected error in getAllHamburguers:', error);
+                    throw new Error('Unexpected error occurred');
                 }
             }
         });
@@ -76,7 +80,15 @@ class ServiceBurger {
                 return burgers;
             }
             catch (error) {
-                console.log('unexpected error find by "id" all burgers', error);
+                console.error('failed error find by "id" burger:', error);
+                if (error instanceof typeorm_1.QueryFailedError) {
+                    console.error('Error find hamburguer to database:', error.message);
+                    throw new Error('Failed to find by "id" hamburguer');
+                }
+                else {
+                    console.error('Unexpected error in "getById" Hamburguer:', error);
+                    throw new Error('Unexpected error occurred');
+                }
             }
         });
     }
@@ -102,8 +114,15 @@ class ServiceBurger {
                 }
             }
             catch (error) {
-                console.log('unexpected error update all burgers', error);
-                return null;
+                console.error('failed error update by "id" burger:', error);
+                if (error instanceof typeorm_1.QueryFailedError) {
+                    console.error('Error update hamburguer to database:', error.message);
+                    throw new Error('Failed to update by "id" hamburguer');
+                }
+                else {
+                    console.error('Unexpected error in "update" Hamburguer:', error);
+                    throw new Error('Unexpected error occurred');
+                }
             }
         });
     }
@@ -123,8 +142,15 @@ class ServiceBurger {
                 }
             }
             catch (error) {
-                console.log('unexpected error delete all burgers', error);
-                return null;
+                console.error('failed error delete by "id" burger:', error);
+                if (error instanceof typeorm_1.QueryFailedError) {
+                    console.error('Error delete hamburguer to database:', error.message);
+                    throw new Error('Failed to delete by "id" hamburguer');
+                }
+                else {
+                    console.error('Unexpected error in "delete" Hamburguer:', error);
+                    throw new Error('Unexpected error occurred');
+                }
             }
         });
     }

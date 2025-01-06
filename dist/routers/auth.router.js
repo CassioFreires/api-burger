@@ -17,10 +17,10 @@ const controller_auth_1 = __importDefault(require("../controllers/controller-aut
 const authRouter = express_1.default.Router();
 const authController = new controller_auth_1.default();
 authRouter.post('/login', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    return yield authController.login(req, res);
+    return yield authController.auth(req, res);
 }));
-authRouter.post('/register', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    return yield authController.register(req, res);
-}));
+// authRouter.post('/register', async(req: Request, res:Response): Promise<any> => {
+//     return await authController.register(req, res);
+// });
 exports.default = authRouter;
 //# sourceMappingURL=auth.router.js.map

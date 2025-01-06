@@ -8,26 +8,33 @@ import CreateBurgersDTO from "../dtos/Burgers/dto-create-burgers";
 import CreateBurgersEntities from "../entities/Burgers/entities-burgers-create";
 
 export default class ServiceBurger {
-    dataBase: DataBase;
+    private dataBase: DataBase;
 
     constructor() {
         this.dataBase = new DataBase();
     }
 
-    async createService(burger: CreateBurgersDTO) {
+    async createService(createBurgerDTO: CreateBurgersDTO) {
         try {
-            console.log(burger)
             const burgersRepository = (await this.dataBase.connect()).getRepository(CreateBurgersEntities);
-            return await burgersRepository.save(burger);
+
+            const newBurguers = new CreateBurgersEntities();
+
+            newBurguers.name = createBurgerDTO.name;
+            newBurguers.description = createBurgerDTO.description;
+            newBurguers.price = createBurgerDTO.price;
+            newBurguers.image_url = createBurgerDTO.image_url;
+
+            return await burgersRepository.save(newBurguers);
         }
         catch (error) {
             console.error('failed error create burger:', error);
             if (error instanceof QueryFailedError) {
-                console.log(error.message);
-                return null;
+                console.error('Error saving hamburguer to database:', error.message);
+                throw new Error('Failed to create hamburguer');
             } else {
-                console.error('unexpected error  error create burger:', error);
-                throw null;
+                console.error('Unexpected error in createService:', error);
+                throw new Error('Unexpected error occurred');
             }
         }
     }
@@ -40,13 +47,13 @@ export default class ServiceBurger {
             });
             return burgers;
         } catch (error) {
-            console.error('Failed to all burger')
+            console.error('failed error find burger:', error);
             if (error instanceof QueryFailedError) {
-                console.log(error.message);
-                return null;
+                console.error('Error find hamburguer to database:', error.message);
+                throw new Error('Failed to find all hamburguers');
             } else {
-                console.error('unexpected error find all burgers:', error);
-                throw null;
+                console.error('Unexpected error in getAllHamburguers:', error);
+                throw new Error('Unexpected error occurred');
             }
         }
     }
@@ -59,8 +66,15 @@ export default class ServiceBurger {
             })
             return burgers;
         } catch (error) {
-            console.log('unexpected error find by "id" all burgers', error);
-            
+            console.error('failed error find by "id" burger:', error);
+            if (error instanceof QueryFailedError) {
+                console.error('Error find hamburguer to database:', error.message);
+                throw new Error('Failed to find by "id" hamburguer');
+            } else {
+                console.error('Unexpected error in "getById" Hamburguer:', error);
+                throw new Error('Unexpected error occurred');
+            }
+
         }
     }
     async updateService(id: number, newBurger: InterfaceUpdateBurgers) {
@@ -84,8 +98,14 @@ export default class ServiceBurger {
                 return null
             }
         } catch (error) {
-            console.log('unexpected error update all burgers', error);
-            return null;
+            console.error('failed error update by "id" burger:', error);
+            if (error instanceof QueryFailedError) {
+                console.error('Error update hamburguer to database:', error.message);
+                throw new Error('Failed to update by "id" hamburguer');
+            } else {
+                console.error('Unexpected error in "update" Hamburguer:', error);
+                throw new Error('Unexpected error occurred');
+            }
         }
     }
     async excludeService(id: number) {
@@ -102,8 +122,14 @@ export default class ServiceBurger {
             }
 
         } catch (error) {
-            console.log('unexpected error delete all burgers', error);
-            return null;
+            console.error('failed error delete by "id" burger:', error);
+            if (error instanceof QueryFailedError) {
+                console.error('Error delete hamburguer to database:', error.message);
+                throw new Error('Failed to delete by "id" hamburguer');
+            } else {
+                console.error('Unexpected error in "delete" Hamburguer:', error);
+                throw new Error('Unexpected error occurred');
+            }
         }
     }
 }

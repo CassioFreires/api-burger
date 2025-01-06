@@ -16,6 +16,7 @@ const services_burgers_1 = __importDefault(require("../services/services-burgers
 const dto_burgers_1 = require("../dtos/Burgers/dto-burgers");
 const dto_update_burgers_1 = __importDefault(require("../dtos/Burgers/dto-update-burgers"));
 const dto_create_burgers_1 = __importDefault(require("../dtos/Burgers/dto-create-burgers"));
+const dto_delete_burgers_1 = __importDefault(require("../dtos/Burgers/dto-delete-burgers"));
 class ControllerBurger {
     constructor() {
         this.serviceBurger = new services_burgers_1.default();
@@ -30,11 +31,11 @@ class ControllerBurger {
                 const burgers = this.serviceBurger.createService(createBurgersDTO);
                 if (!burgers)
                     return res.json({ message: 'Failed to create burger', status: 404 });
-                return res.json({ message: 'create burger with successfully', data: createBurgersDTO });
+                return res.json({ message: 'create burger with successfully', burgers });
             }
             catch (error) {
                 console.error('Failed to create burger', error);
-                return res.status(500).json({ message: 'Failed to create burgers', status: 500 });
+                return res.status(500).json({ message: 'Failed to create burgers', status: 500, error });
             }
         });
     }
@@ -47,12 +48,12 @@ class ControllerBurger {
                 return res.json({
                     message: 'Find all burgers successfully',
                     status: 200,
-                    burgers: burgers // Retorna o array de DTOs no formato esperado
+                    burgers // Retorna o array de DTOs no formato esperado
                 });
             }
             catch (error) {
                 console.error('Failed to find all burgers', error);
-                return res.status(500).json({ message: 'Failed to find all burgers', status: 500 });
+                return res.status(500).json({ message: 'Failed to find all burgers', status: 500, error });
             }
         });
     }
@@ -117,14 +118,15 @@ class ControllerBurger {
                 const burgers = yield this.serviceBurger.getByIdService(1000);
                 if (!burgers || burgers == null)
                     return res.json({ message: 'No burgers found in the database', status: 404 });
-                const updatedBurger = yield this.serviceBurger.excludeService(Number(id));
-                if (!updatedBurger) {
+                const newDeleteBurger = new dto_delete_burgers_1.default(burgers.id, burgers.name, burgers.description, burgers.price, burgers.image_url);
+                const deleteBurger = yield this.serviceBurger.excludeService(Number(id));
+                if (!deleteBurger) {
                     return res.status(404).json({ message: 'Burger not found or failed to delete', status: 404 });
                 }
                 return res.json({
                     message: 'Burger deleted successfully by ID',
                     status: 200,
-                    updatedBurger, // Retorna o hambúrguer atualizado
+                    newDeleteBurger, // Retorna o hambúrguer atualizado
                 });
             }
             catch (error) {
