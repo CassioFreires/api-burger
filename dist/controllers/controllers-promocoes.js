@@ -29,7 +29,7 @@ class ControllersPromocoes {
                 const promotions = this.servicePromotions.createService(createPromotions);
                 if (!promotions)
                     return res.json({ message: 'Failed to create promotions', status: 404 });
-                return res.json({ message: 'create promotions with successfully', data: createPromotions });
+                return res.json({ message: 'create promotions with successfully', promotions });
             }
             catch (error) {
                 console.error('Failed to create promotions', error);
@@ -46,7 +46,7 @@ class ControllersPromocoes {
                 return res.json({
                     message: 'Find all promotions successfully',
                     status: 200,
-                    promotions: promotions // Retorna o array de DTOs no formato esperado
+                    promotions // Retorna o array de DTOs no formato esperado
                 });
             }
             catch (error) {

@@ -6,37 +6,40 @@ import CreatePromototionsDTO from "../dtos/Promotions/dto-create-promo";
 import PromotionsUpdateDTO from "../dtos/Promotions/dto-update-promo";
 
 export default class ControllersPromocoes {
-    servicePromotions: ServicePromocoes;
+    private servicePromotions: ServicePromocoes;
     constructor() {
         this.servicePromotions = new ServicePromocoes();
     }
 
-    async create(req:Request, res:Response): Promise<Response<InterfaceResponsePromotions | PromotionsDTO>> {
+    async create(req:Request, res:Response): Promise<Response<InterfaceResponsePromotions>> {
         try {
             const {name, description, price, image_url} = req.body;
             
             if(!name || !description || !price || !image_url) return res.json({message: 'you need to fill in all the fields', status: 404});
 
             const createPromotions = new CreatePromototionsDTO(name, description, description, image_url);
+
             const promotions = this.servicePromotions.createService(createPromotions);
+
             if(!promotions) return res.json({message: 'Failed to create promotions', status: 404});
 
-            return res.json({message: 'create promotions with successfully', data: createPromotions});
+            return res.json({message: 'create promotions with successfully', promotions});
         }catch(error) {
             console.error('Failed to create promotions', error);
-            return res.status(500).json({ message: 'Failed to create promotions', status: 500 });
+            return res.status(500).json({ message: 'Failed to create promotions', status: 500});
         }
     }
 
-    async getAll(req: Request, res: Response): Promise<Response<InterfaceResponsePromotions | PromotionsDTO>> {
+    async getAll(req: Request, res: Response): Promise<Response<InterfaceResponsePromotions>> {
         try {
             const promotions = await this.servicePromotions.getAllService();
             if (!promotions || promotions.length <= 0) return res.json({ message: 'No promotions found in the database', status: 404 });
 
+
             return res.json({
                 message: 'Find all promotions successfully',
                 status: 200,
-                promotions: promotions // Retorna o array de DTOs no formato esperado
+                promotions // Retorna o array de DTOs no formato esperado
             });
         } catch (error) {
             console.error('Failed to find all promotions', error);
@@ -44,7 +47,7 @@ export default class ControllersPromocoes {
         }
     }
 
-    async getById(req: Request, res: Response): Promise<Response<InterfaceResponsePromotions | PromotionsDTO>> {
+    async getById(req: Request, res: Response): Promise<Response<InterfaceResponsePromotions>> {
         try {
             const { id } = req.params;
             if (!id || isNaN(Number(id))) return res.send({ message: 'ID card invalid' });
@@ -62,7 +65,7 @@ export default class ControllersPromocoes {
         }
     }
 
-    async update(req: Request, res: Response): Promise<Response<InterfaceResponsePromotions | PromotionsDTO>> {
+    async update(req: Request, res: Response): Promise<Response<InterfaceResponsePromotions>> {
         try {
             const { id } = req.params;
 
@@ -97,7 +100,7 @@ export default class ControllersPromocoes {
         }
     }
 
-    async exclude(req: Request, res:Response): Promise<Response<InterfaceResponsePromotions | PromotionsDTO>> {
+    async exclude(req: Request, res:Response): Promise<Response<InterfaceResponsePromotions>> {
         try {
             const { id } = req.params;
 

@@ -9,7 +9,7 @@ import UpdatePromotionsEntites from "../entities/Promotions/entites-promo-update
 import DeletePromotionsEntities from "../entities/Promotions/entities-promo-delete";
 
 export default class ServicePromocoes {
-    dataBase: DataBase;
+    private dataBase: DataBase;
 
     constructor() {
         this.dataBase = new DataBase();
@@ -23,11 +23,11 @@ export default class ServicePromocoes {
         catch (error) {
             console.error('failed error create promotions:', error);
             if (error instanceof QueryFailedError) {
-                console.log(error.message);
-                return null;
+                console.error('Error saving promotions to database:', error.message);
+                throw new Error('Failed to create promotions');
             } else {
-                console.error('unexpected error  error create promotions:', error);
-                throw null;
+                console.error('Unexpected error in createPromotionsService:', error);
+                throw new Error('Unexpected error occurred');
             }
         }
     }
@@ -59,8 +59,13 @@ export default class ServicePromocoes {
             })
             return promotions;
         } catch (error) {
-            console.log('unexpected error find by "id" all promotions', error);
-            
+            if (error instanceof QueryFailedError) {
+                console.error('Error find by "id" promotions to database:', error.message);
+                throw new Error('Failed to find by "id" promotions');
+            } else {
+                console.error('Unexpected error in getByIdPromotions:', error);
+                throw new Error('Unexpected error occurred');
+            }
         }
     }
     async updateService(id: number, newPromotions: InterfaceUpdatePromotions) {
@@ -84,8 +89,13 @@ export default class ServicePromocoes {
                 return null
             }
         } catch (error) {
-            console.log('unexpected error update all promotions', error);
-            return null;
+            if (error instanceof QueryFailedError) {
+                console.error('Error find by "id" promotions to database:', error.message);
+                throw new Error('Failed to find by "id" promotions');
+            } else {
+                console.error('Unexpected error in getByIdPromotions:', error);
+                throw new Error('Unexpected error occurred');
+            }
         }
     }
     async excludeService(id: number) {
@@ -103,8 +113,13 @@ export default class ServicePromocoes {
             }
 
         } catch (error) {
-            console.log('unexpected error delete all promotions', error);
-            return null;
+            if (error instanceof QueryFailedError) {
+                console.error('Error find by "id" promotions to database:', error.message);
+                throw new Error('Failed to find by "id" promotions');
+            } else {
+                console.error('Unexpected error in getByIdPromotions:', error);
+                throw new Error('Unexpected error occurred');
+            }
         }
     }
 }

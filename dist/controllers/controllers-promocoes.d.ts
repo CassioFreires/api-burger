@@ -1,13 +1,11 @@
 import { Response, Request } from "express";
-import ServicePromocoes from "../services/service-promocoes";
 import InterfaceResponsePromotions from "../interfaces/Promotions/interface-response";
-import { PromotionsDTO } from "../dtos/Promotions/dto-get-promo";
 export default class ControllersPromocoes {
-    servicePromotions: ServicePromocoes;
+    private servicePromotions;
     constructor();
-    create(req: Request, res: Response): Promise<Response<InterfaceResponsePromotions | PromotionsDTO>>;
-    getAll(req: Request, res: Response): Promise<Response<InterfaceResponsePromotions | PromotionsDTO>>;
-    getById(req: Request, res: Response): Promise<Response<InterfaceResponsePromotions | PromotionsDTO>>;
-    update(req: Request, res: Response): Promise<Response<InterfaceResponsePromotions | PromotionsDTO>>;
-    exclude(req: Request, res: Response): Promise<Response<InterfaceResponsePromotions | PromotionsDTO>>;
+    create(req: Request, res: Response): Promise<Response<InterfaceResponsePromotions>>;
+    getAll(req: Request, res: Response): Promise<Response<InterfaceResponsePromotions>>;
+    getById(req: Request, res: Response): Promise<Response<InterfaceResponsePromotions>>;
+    update(req: Request, res: Response): Promise<Response<InterfaceResponsePromotions>>;
+    exclude(req: Request, res: Response): Promise<Response<InterfaceResponsePromotions>>;
 }

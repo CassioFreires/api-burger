@@ -1,23 +1,13 @@
 import InterfaceDeletePromotions from "../../interfaces/Promotions/interface-delete-promo";
 
 export default class DeletePromotionsDTO implements InterfaceDeletePromotions{
-    promotion_id!: number;
-    name!: string;
-    description!: string;
-    price!: number;
-    image_url!: string;
-    constructor(
-        public _promotion_id: number,
-        public _name: string,
-        public _description: string,
-        public _price: number,
-        public _image_url: string,
 
-    ) {
-        this.promotion_id = this._promotion_id;
-        this.name = this._name;
-        this.description = this._description;
-        this.price = this._price;
-        this.image_url = this._image_url;
-    }
+    constructor(
+        public promotion_id: number,
+        public name: string,
+        public description: string,
+        public price: number,
+        public image_url: string,
+
+    ) {}
 }
