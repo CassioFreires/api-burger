@@ -7,9 +7,10 @@ import CombosDeleteEntities from "../entities/Combos/entities-combo-delete";
 import CreateBurgersDTO from "../dtos/Burgers/dto-create-burgers";
 import CreateCombosEntities from "../entities/Combos/entities-combo-create";
 import CreateCombosDTO from "../dtos/Combos/dto-create.combos";
+import CombosUpdateDTO from "../dtos/Combos/dto-update-combos";
 
 export default class ServiceCombos {
-    database: DataBase;
+    private database: DataBase;
 
     constructor() {
         this.database = new DataBase();
@@ -23,14 +24,15 @@ export default class ServiceCombos {
         catch (error) {
             console.error('failed error create combos:', error);
             if (error instanceof QueryFailedError) {
-                console.log(error.message);
-                return null;
+                console.error('Error saving combos to database:', error.message);
+                throw new Error('Failed to create combos');
             } else {
-                console.error('unexpected error  error create combos:', error);
-                throw null;
+                console.error('Unexpected error in createCombosService:', error);
+                throw new Error('Unexpected error occurred');
             }
         }
     }
+    
     async getAllService() {
         try {
             const combos = (await this.database.connect()).getRepository(CombosEntities).find({
@@ -40,16 +42,17 @@ export default class ServiceCombos {
             });
             return combos;
         } catch (error) {
-            console.error('Failed to all combos')
+            console.error('failed error getAll combos:', error);
             if (error instanceof QueryFailedError) {
-                console.log(error.message);
-                return null;
+                console.error('Error getAll combos to database:', error.message);
+                throw new Error('Failed to getAll combos');
             } else {
-                console.error('unexpected error find all combos:', error);
-                throw null;
+                console.error('Unexpected error in getAllCombosService:', error);
+                throw new Error('Unexpected error occurred');
             }
         }
     }
+
     async getByIdService(id: number) {
         try {
             const combos = (await this.database.connect()).getRepository(CombosEntities).findOne({
@@ -59,12 +62,18 @@ export default class ServiceCombos {
             })
             return combos;
         } catch (error) {
-            console.log('unexpected error find by "id" all combos', error);
-
+            console.error('failed error get by "id" combos:', error);
+            if (error instanceof QueryFailedError) {
+                console.error('Error get by "id" combos to database:', error.message);
+                throw new Error('Failed to get by "id" combos');
+            } else {
+                console.error('Unexpected error in getByIdCombosService:', error);
+                throw new Error('Unexpected error occurred');
+            }
         }
     }
 
-    async updateService(id: number, newCombos: InterfaceUpdateCombos) {
+    async updateService(id: number, newCombos: CombosUpdateDTO) {
         try {
             const updateRepository = (await this.database.connect()).getRepository(CombosUpdateEntities);
             const update_combos = await updateRepository.findOneBy({
@@ -84,8 +93,14 @@ export default class ServiceCombos {
                 return null
             }
         } catch (error) {
-            console.log('unexpected error update all burgers', error);
-            return null;
+            console.error('failed error update combos:', error);
+            if (error instanceof QueryFailedError) {
+                console.error('Error update combos to database:', error.message);
+                throw new Error('Failed to update combos');
+            } else {
+                console.error('Unexpected error in UpdateCombosService:', error);
+                throw new Error('Unexpected error occurred');
+            }
         }
     }
 
@@ -104,8 +119,14 @@ export default class ServiceCombos {
             }
 
         } catch (error) {
-            console.log('unexpected error delete all combos', error);
-            return null;
+            console.error('failed error delete combos:', error);
+            if (error instanceof QueryFailedError) {
+                console.error('Error delete combos to database:', error.message);
+                throw new Error('Failed to delete combos');
+            } else {
+                console.error('Unexpected error in deleteCombosService:', error);
+                throw new Error('Unexpected error occurred');
+            }
         }
     }
 }

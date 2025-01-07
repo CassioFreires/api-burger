@@ -7,29 +7,30 @@ import CombosUpdateDTO from '../dtos/Combos/dto-update-combos';
 import CreateCombosDTO from '../dtos/Combos/dto-create.combos';
 
 export default class ControllerCombos {
-    serviceCombos: ServiceCombos;
+    private serviceCombos: ServiceCombos;
     constructor() {
         this.serviceCombos = new ServiceCombos();
     }
 
-    async create(req: Request, res: Response): Promise<Response<InterfaceResponseCombos | CombosDTO>> {
+    async create(req: Request, res: Response): Promise<Response<InterfaceResponseCombos>> {
         try {
-            const { name, description, price} = req.body;
+            const { name, description, price } = req.body;
 
             if (!name || !description || !price) return res.json({ message: 'you need to fill in all the fields', status: 404 });
 
             const createCombos = new CreateCombosDTO(name, description, price);
+
             const combos = this.serviceCombos.createService(createCombos);
             if (!combos) return res.json({ message: 'Failed to create combos', status: 404 });
 
-            return res.json({ message: 'create combos with successfully', data: createCombos });
+            return res.json({ message: 'create combos with successfully', createCombos });
         } catch (error) {
             console.error('Failed to create combos', error);
             return res.status(500).json({ message: 'Failed to create combos', status: 500 });
         }
     }
 
-    async getAll(req: Request, res: Response): Promise<Response<InterfaceResponseCombos | CombosDTO>> {
+    async getAll(req: Request, res: Response): Promise<Response<InterfaceResponseCombos>> {
         try {
             const combos = await this.serviceCombos.getAllService();
             if (!combos || combos.length <= 0) return res.json({ message: 'No combos found in the database', status: 404 });
@@ -45,7 +46,7 @@ export default class ControllerCombos {
         }
     }
 
-    async getById(req: Request, res: Response): Promise<Response<InterfaceResponseCombos | CombosDTO>> {
+    async getById(req: Request, res: Response): Promise<Response<InterfaceResponseCombos>> {
         try {
             const { id } = req.params;
             if (!id || isNaN(Number(id))) return res.send({ message: 'ID card invalid' });
@@ -63,7 +64,7 @@ export default class ControllerCombos {
         }
     }
 
-    async update(req: Request, res: Response) {
+    async update(req: Request, res: Response): Promise<Response<InterfaceResponseCombos>> {
         try {
             const { id } = req.params;
 
@@ -99,17 +100,15 @@ export default class ControllerCombos {
         }
     }
 
-    async exclude(req: Request, res: Response): Promise<Response<InterfaceResponseCombos | CombosDTO>> {
+    async exclude(req: Request, res: Response): Promise<Response<InterfaceResponseCombos>> {
         try {
             const { id } = req.params;
-            console.log(id)
 
             if (!id || isNaN(Number(id))) return res.send({ message: 'ID card invalid' });
 
             const combos = await this.serviceCombos.getByIdService(Number(id));
             if (!combos || combos == null) return res.json({ message: 'No combos found in the database', status: 404 });
 
-            console.log(combos)
 
             const deleteCombo = await this.serviceCombos.excludeService(combos.combo_id);
 
