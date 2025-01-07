@@ -29,7 +29,7 @@ class ControllerCombos {
                 const combos = this.serviceCombos.createService(createCombos);
                 if (!combos)
                     return res.json({ message: 'Failed to create combos', status: 404 });
-                return res.json({ message: 'create combos with successfully', data: createCombos });
+                return res.json({ message: 'create combos with successfully', createCombos });
             }
             catch (error) {
                 console.error('Failed to create combos', error);
@@ -110,13 +110,11 @@ class ControllerCombos {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const { id } = req.params;
-                console.log(id);
                 if (!id || isNaN(Number(id)))
                     return res.send({ message: 'ID card invalid' });
                 const combos = yield this.serviceCombos.getByIdService(Number(id));
                 if (!combos || combos == null)
                     return res.json({ message: 'No combos found in the database', status: 404 });
-                console.log(combos);
                 const deleteCombo = yield this.serviceCombos.excludeService(combos.combo_id);
                 if (!deleteCombo) {
                     return res.status(404).json({ message: 'Burger not found or failed to delete', status: 404 });

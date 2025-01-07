@@ -8,12 +8,12 @@ import CreateDrinksDTO from '../dtos/Drinks/dto-create-drinks';
 
 
 export default class ControllerDrinks {
-    serviceDrinks: ServiceDrinks;
+    private serviceDrinks: ServiceDrinks;
     constructor() {
         this.serviceDrinks = new ServiceDrinks();
     }
 
-    async create(req: Request, res: Response): Promise<Response<InterfaceResponseDrinks | DrinksDTO>> {
+    async create(req: Request, res: Response): Promise<Response<InterfaceResponseDrinks>> {
         try {
             const { name, description, price, image_url} = req.body;
 
@@ -30,7 +30,7 @@ export default class ControllerDrinks {
         }
     }
 
-    async getAll(req: Request, res: Response): Promise<Response<InterfaceResponseDrinks | DrinksDTO>> {
+    async getAll(req: Request, res: Response): Promise<Response<InterfaceResponseDrinks>> {
         try {
             const drinks = await this.serviceDrinks.getAllService();
             if (!drinks || drinks.length <= 0) return res.json({ message: 'No drinks found in the database', status: 404 });
@@ -46,7 +46,7 @@ export default class ControllerDrinks {
         }
     }
 
-    async getById(req: Request, res: Response): Promise<Response<InterfaceResponseDrinks | DrinksDTO>> {
+    async getById(req: Request, res: Response): Promise<Response<InterfaceResponseDrinks>> {
         try {
             const { id } = req.params;
             if (!id || isNaN(Number(id))) return res.send({ message: 'ID card invalid' });
@@ -64,7 +64,7 @@ export default class ControllerDrinks {
         }
     }
 
-    async update(req: Request, res: Response): Promise<Response<InterfaceResponseDrinks | DrinksDTO>>  {
+    async update(req: Request, res: Response): Promise<Response<InterfaceResponseDrinks>>  {
         try {
             const { id } = req.params;
 
@@ -99,7 +99,7 @@ export default class ControllerDrinks {
         }
     }
 
-    async exclude(req: Request, res: Response): Promise<Response<InterfaceResponseDrinks | DrinksDTO>>  {
+    async exclude(req: Request, res: Response): Promise<Response<InterfaceResponseDrinks>>  {
         try {
             const { id } = req.params;
 

@@ -9,7 +9,7 @@ import CreateDrinksEntities from "../entities/Drinks/entities-drinks-create";
 
 
 export default class ServiceDrinks {
-    dataBase: DataBase;
+    private dataBase: DataBase;
 
     constructor() {
         this.dataBase = new DataBase();
@@ -23,11 +23,11 @@ export default class ServiceDrinks {
         catch (error) {
             console.error('failed error create drinks:', error);
             if (error instanceof QueryFailedError) {
-                console.log(error.message);
-                return null;
+                console.error('Error saving drinks to database:', error.message);
+                throw new Error('Failed to create drinks');
             } else {
-                console.error('unexpected error  error create drinks:', error);
-                throw null;
+                console.error('Unexpected error in createDrinksService:', error);
+                throw new Error('Unexpected error occurred');
             }
         }
     }
@@ -40,13 +40,13 @@ export default class ServiceDrinks {
             });
             return drinks;
         } catch (error) {
-            console.error('Failed to all drinks')
+            console.error('failed error getAll drinks:', error);
             if (error instanceof QueryFailedError) {
-                console.log(error.message);
-                return null;
+                console.error('Error getAll drinks to database:', error.message);
+                throw new Error('Failed to getAll drinks');
             } else {
-                console.error('unexpected error find all drinks:', error);
-                throw null;
+                console.error('Unexpected error in getAllDrinksService:', error);
+                throw new Error('Unexpected error occurred');
             }
         }
     }
@@ -59,8 +59,14 @@ export default class ServiceDrinks {
             })
             return drinks;
         } catch (error) {
-            console.log('unexpected error find by "id" all drinks', error);
-            
+            console.error('failed error get by "id" drinks:', error);
+            if (error instanceof QueryFailedError) {
+                console.error('Error get by "id" drinks to database:', error.message);
+                throw new Error('Failed to get by "id" drinks');
+            } else {
+                console.error('Unexpected error in getByIdDrinksService:', error);
+                throw new Error('Unexpected error occurred');
+            }
         }
     }
     async updateService(id: number, newDrinks: InterfaceUpdateDrinks) {
@@ -84,8 +90,14 @@ export default class ServiceDrinks {
                 return null
             }
         } catch (error) {
-            console.log('unexpected error update all drinks', error);
-            return null;
+            console.error('failed error update drinks:', error);
+            if (error instanceof QueryFailedError) {
+                console.error('Error update drinks to database:', error.message);
+                throw new Error('Failed to update drinks');
+            } else {
+                console.error('Unexpected error in UpdateDrinksService:', error);
+                throw new Error('Unexpected error occurred');
+            }
         }
     }
     async excludeService(id: number) {
@@ -102,8 +114,14 @@ export default class ServiceDrinks {
             }
 
         } catch (error) {
-            console.log('unexpected error delete all drinks', error);
-            return null;
+            console.error('failed error delete drinks:', error);
+            if (error instanceof QueryFailedError) {
+                console.error('Error delete drinks to database:', error.message);
+                throw new Error('Failed to delete drinks');
+            } else {
+                console.error('Unexpected error in deleteDrinksService:', error);
+                throw new Error('Unexpected error occurred');
+            }
         }
     }
 }
