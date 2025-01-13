@@ -19,5 +19,20 @@ const controllerUsers = new controller_users_1.default();
 usersRouter.post('/register', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     return yield controllerUsers.register(req, res);
 }));
+usersRouter.post('/login', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    return yield controllerUsers.login(req, res);
+}));
+usersRouter.get('/getAll', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    return yield controllerUsers.getAll(req, res);
+}));
+usersRouter.get('/findById', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    return yield controllerUsers.getById(req, res);
+}));
+usersRouter.get('/update', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    return yield controllerUsers.update(req, res);
+}));
+usersRouter.get('/exclude', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    return yield controllerUsers.exclude(req, res);
+}));
 exports.default = usersRouter;
 //# sourceMappingURL=routers-users.js.map

@@ -16,6 +16,11 @@ import DrinksEntities from "../entities/Drinks/entites-drinks";
 import UpdateDrinksEntites from "../entities/Drinks/entites-drinks-update";
 import DeleteDrinksEntities from "../entities/Drinks/entities-drinks-delete";
 import CreateDrinksEntities from "../entities/Drinks/entities-drinks-create";
+import LoginEntities from "../entities/Users/entities-users-login";
+import UserEntities from "../entities/Users/entities-users-get";
+import RoleEntities from "../entities/Roles/entities-roles-get";
+import PermissionEntities from "../entities/Permissions/entities-permission-get";
+import RolePermissionEntities from "../entities/Role_Permission/entities-rolePermission-get";
 
 export default class DataBase {
     private conex?: DataSource;
@@ -50,7 +55,14 @@ export default class DataBase {
                 DrinksEntities,
                 UpdateDrinksEntites,
                 DeleteDrinksEntities,
-                CreateDrinksEntities
+                CreateDrinksEntities,
+
+                // Users
+                LoginEntities,
+                UserEntities,
+                RoleEntities,
+                PermissionEntities,
+                RolePermissionEntities
 
             ],
             synchronize: false,

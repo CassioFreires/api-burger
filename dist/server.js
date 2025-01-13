@@ -10,7 +10,7 @@ const routers_promotions_1 = __importDefault(require("./routers/routers.promotio
 const cors_1 = __importDefault(require("cors"));
 const routers_combos_1 = __importDefault(require("./routers/routers-combos"));
 const routers_drinks_1 = __importDefault(require("./routers/routers-drinks"));
-const auth_router_1 = __importDefault(require("./routers/auth.router"));
+const routers_users_1 = __importDefault(require("./routers/routers-users"));
 const dotenv_1 = __importDefault(require("dotenv"));
 const db = new DataBase_1.default();
 const app = (0, express_1.default)();
@@ -22,7 +22,7 @@ app.use('/burger', routers_burger_1.default);
 app.use('/promotions', routers_promotions_1.default);
 app.use('/combos', routers_combos_1.default);
 app.use('/drinks', routers_drinks_1.default);
-app.use('/auth', auth_router_1.default);
+app.use('/user', routers_users_1.default);
 db.connect()
     .then(() => {
     console.log("Database initialized successfully");

@@ -11,7 +11,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 const typeorm_1 = require("typeorm");
 class AuthService {
-    // dataBase: DataBase;
+    // private dataBase: DataBase;
     // Ajuste o tipo de retorno para ser um objeto específico ou `null`
     auth(bodyLogin) {
         return __awaiter(this, void 0, void 0, function* () {

@@ -20,6 +20,7 @@ export default class ControllerDrinks {
             if (!name || !description || !price || !image_url) return res.json({ message: 'you need to fill in all the fields', status: 404 });
 
             const createDrinks = new CreateDrinksDTO(name, description, price, image_url);
+            
             const drinks = this.serviceDrinks.createService(createDrinks);
             if (!drinks) return res.json({ message: 'Failed to create drinks', status: 404 });
 

@@ -5,7 +5,7 @@ import promotionsRouter from './routers/routers.promotions';
 import cors from 'cors';
 import combosRouter from './routers/routers-combos';
 import drinksRouter from './routers/routers-drinks';
-import authRouter from './routers/auth.router';
+import usersRouter from './routers/routers-users';
 import env from 'dotenv'
 
 const db = new DataBase();
@@ -22,7 +22,7 @@ app.use('/burger', burgerRouter);
 app.use('/promotions', promotionsRouter);
 app.use('/combos', combosRouter);
 app.use('/drinks', drinksRouter);
-app.use('/auth', authRouter);
+app.use('/user', usersRouter);
 
 
 db.connect()

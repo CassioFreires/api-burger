@@ -112,7 +112,7 @@ export default class ControllerBurger {
         }
     }
 
-    async exclude(req: Request, res:Response): Promise<Response<InterfaceResponseBurgers | BurgersDTO>> {
+    async exclude(req: Request, res:Response): Promise<Response<InterfaceResponseBurgers>> {
         try {
             const { id } = req.params;
 

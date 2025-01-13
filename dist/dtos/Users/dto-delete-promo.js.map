@@ -1,0 +1,1 @@
+{"version":3,"file":"dto-delete-promo.js","sourceRoot":"","sources":["../../../src/dtos/Users/dto-delete-promo.ts"],"names":[],"mappings":";;AAEA,MAAqB,mBAAmB;IAEpC,YACW,YAAoB,EACpB,IAAY,EACZ,WAAmB,EACnB,KAAa,EACb,SAAiB;QAJjB,iBAAY,GAAZ,YAAY,CAAQ;QACpB,SAAI,GAAJ,IAAI,CAAQ;QACZ,gBAAW,GAAX,WAAW,CAAQ;QACnB,UAAK,GAAL,KAAK,CAAQ;QACb,cAAS,GAAT,SAAS,CAAQ;IAEzB,CAAC;CACP;AAVD,sCAUC"}

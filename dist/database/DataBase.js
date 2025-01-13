@@ -28,6 +28,11 @@ const entites_drinks_1 = __importDefault(require("../entities/Drinks/entites-dri
 const entites_drinks_update_1 = __importDefault(require("../entities/Drinks/entites-drinks-update"));
 const entities_drinks_delete_1 = __importDefault(require("../entities/Drinks/entities-drinks-delete"));
 const entities_drinks_create_1 = __importDefault(require("../entities/Drinks/entities-drinks-create"));
+const entities_users_login_1 = __importDefault(require("../entities/Users/entities-users-login"));
+const entities_users_get_1 = __importDefault(require("../entities/Users/entities-users-get"));
+const entities_roles_get_1 = __importDefault(require("../entities/Roles/entities-roles-get"));
+const entities_permission_get_1 = __importDefault(require("../entities/Permissions/entities-permission-get"));
+const entities_rolePermission_get_1 = __importDefault(require("../entities/Role_Permission/entities-rolePermission-get"));
 class DataBase {
     connect() {
         return __awaiter(this, void 0, void 0, function* () {
@@ -57,7 +62,13 @@ class DataBase {
                     entites_drinks_1.default,
                     entites_drinks_update_1.default,
                     entities_drinks_delete_1.default,
-                    entities_drinks_create_1.default
+                    entities_drinks_create_1.default,
+                    // Users
+                    entities_users_login_1.default,
+                    entities_users_get_1.default,
+                    entities_roles_get_1.default,
+                    entities_permission_get_1.default,
+                    entities_rolePermission_get_1.default
                 ],
                 synchronize: false,
                 logging: true
