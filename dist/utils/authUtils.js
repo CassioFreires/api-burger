@@ -8,14 +8,18 @@ exports.verifyToken = verifyToken;
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const config_1 = require("../config/config");
 function generateToken(playload) {
-    return jsonwebtoken_1.default.sign(playload, config_1.JWT_CONFIG.SECRET, {
+    const token = jsonwebtoken_1.default.sign(playload, config_1.JWT_CONFIG.SECRET, {
         expiresIn: config_1.JWT_CONFIG.EXPIRATION,
         issuer: config_1.JWT_CONFIG.ISSUER
     });
+    return token;
 }
 function verifyToken(token) {
     try {
-        return jsonwebtoken_1.default.verify(token, config_1.JWT_CONFIG.SECRET);
+        return jsonwebtoken_1.default.verify(token, config_1.JWT_CONFIG.SECRET, (error) => {
+            if (error) {
+            }
+        });
     }
     catch (error) {
         throw new Error('Invalid Token');

@@ -14,6 +14,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const service_user_1 = __importDefault(require("../services/service-user"));
 const dto_login_users_1 = __importDefault(require("../dtos/Users/dto-login-users"));
+const authUtils_1 = require("../utils/authUtils");
 class ControllerUsers {
     constructor() {
         this.serviceUser = new service_user_1.default();
@@ -30,8 +31,9 @@ class ControllerUsers {
                 if (!response || response.password_hash !== password_hash) {
                     return res.json({ message: 'Invalid credentials', status: 401 });
                 }
-                // generateToken()
-                return res.json({ message: 'login OK', status: 201, response });
+                const token = (0, authUtils_1.generateToken)({ id: response.id, name: response.name, email: response.email, roles: response.role_name });
+                res.json({ message: 'login OK', status: 201, response, token });
+                return token;
             }
             catch (error) {
                 // Lidar com erros de forma consistente
@@ -44,6 +46,7 @@ class ControllerUsers {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 // registrar usuário
+                const {} = req.body;
             }
             catch (error) {
                 console.error(error);

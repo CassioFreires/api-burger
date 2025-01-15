@@ -1,9 +1,15 @@
 import { Request, Response, NextFunction } from "express";
 import ServiceUsers from "../services/service-user";
 import LoginDTO from "../dtos/Users/dto-login-users";
+import { generateToken } from "../utils/authUtils";
 
 export default class ControllerUsers {
-    private serviceUser = new ServiceUsers();
+    private serviceUser:ServiceUsers;
+
+    constructor(){
+        this.serviceUser = new ServiceUsers();
+    }
+
     async login(req: Request, res: Response): Promise<any> {
         try {
             const { email, password_hash } = req.body;
@@ -14,13 +20,13 @@ export default class ControllerUsers {
             const loginDto = new LoginDTO(email, password_hash);
             const response = await this.serviceUser.login(loginDto);
 
-            if(!response || response.password_hash !== password_hash) {
+            if (!response || response.password_hash !== password_hash) {
                 return res.json({ message: 'Invalid credentials', status: 401 })
             }
 
-            // generateToken()
-            return res.json({ message: 'login OK', status: 201, response });
-            
+            const token = generateToken({id: response.id, name: response.name, email:response.email, roles:response.role_name});
+            res.json({ message: 'login OK', status: 201, response, token});
+            return token;
 
         } catch (error) {
             // Lidar com erros de forma consistente
@@ -31,6 +37,8 @@ export default class ControllerUsers {
     async register(req: Request, res: Response): Promise<any> {
         try {
             // registrar usuário
+            const {} = req.body;
+            
         } catch (error) {
             console.error(error);
             return res.status(500).json({ message: 'Failed to register user', status: 500 });

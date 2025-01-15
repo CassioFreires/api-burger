@@ -1,2 +1,3 @@
 import { Request, Response, NextFunction } from "express";
-export declare function AuthMiddleware(req: Request, res: Response, next: NextFunction): Response<any, Record<string, any>> | undefined;
+import jwt from 'jsonwebtoken';
+export declare function AuthMiddleware(req: Request, res: Response, next: NextFunction): string | Response<any, Record<string, any>> | jwt.JwtPayload | undefined;
