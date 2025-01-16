@@ -1,13 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 class CreateUserDTO {
-    constructor(name, email, password, role, // Opcional, pois o padrão será '1' (Cliente)
-    status) {
+    constructor(name, email, password_hash, role_id, // Opcional, pois o padrão será '3' (Cliente)
+    active) {
         this.name = name;
         this.email = email;
-        this.password = password;
-        this.role = role;
-        this.status = status;
+        this.password_hash = password_hash;
+        this.role_id = role_id;
+        this.active = active;
     }
 }
 exports.default = CreateUserDTO;

@@ -63,7 +63,7 @@ class ControllerBurger {
                 const { id } = req.params;
                 if (!id || isNaN(Number(id)))
                     return res.send({ message: 'ID card invalid' });
-                const burgers = yield this.serviceBurger.getByIdService(5);
+                const burgers = yield this.serviceBurger.getByIdService(Number(id));
                 if (!burgers)
                     return res.json({ message: 'No burgers found in the database', status: 404 });
                 const burgersDTO = new dto_burgers_1.BurgersDTO(burgers.id, burgers.name, burgers.description, burgers.price, burgers.image_url);

@@ -21,6 +21,8 @@ import UserEntities from "../entities/Users/entities-users-get";
 import RoleEntities from "../entities/Roles/entities-roles-get";
 import PermissionEntities from "../entities/Permissions/entities-permission-get";
 import RolePermissionEntities from "../entities/Role_Permission/entities-rolePermission-get";
+import CreateUserEntities from "../entities/Users/entities-users-create copy 2";
+import UpdateUserEntities from "../entities/Users/entities-users-update";
 
 export default class DataBase {
     private conex?: DataSource;
@@ -62,7 +64,9 @@ export default class DataBase {
                 UserEntities,
                 RoleEntities,
                 PermissionEntities,
-                RolePermissionEntities
+                RolePermissionEntities,
+                CreateUserEntities,
+                UpdateUserEntities
 
             ],
             synchronize: false,

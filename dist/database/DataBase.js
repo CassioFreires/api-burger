@@ -33,6 +33,8 @@ const entities_users_get_1 = __importDefault(require("../entities/Users/entities
 const entities_roles_get_1 = __importDefault(require("../entities/Roles/entities-roles-get"));
 const entities_permission_get_1 = __importDefault(require("../entities/Permissions/entities-permission-get"));
 const entities_rolePermission_get_1 = __importDefault(require("../entities/Role_Permission/entities-rolePermission-get"));
+const entities_users_create_copy_2_1 = __importDefault(require("../entities/Users/entities-users-create copy 2"));
+const entities_users_update_1 = __importDefault(require("../entities/Users/entities-users-update"));
 class DataBase {
     connect() {
         return __awaiter(this, void 0, void 0, function* () {
@@ -68,7 +70,9 @@ class DataBase {
                     entities_users_get_1.default,
                     entities_roles_get_1.default,
                     entities_permission_get_1.default,
-                    entities_rolePermission_get_1.default
+                    entities_rolePermission_get_1.default,
+                    entities_users_create_copy_2_1.default,
+                    entities_users_update_1.default
                 ],
                 synchronize: false,
                 logging: true

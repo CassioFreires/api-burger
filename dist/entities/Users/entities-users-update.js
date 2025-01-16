@@ -27,15 +27,15 @@ __decorate([
 __decorate([
     (0, typeorm_1.Column)(),
     __metadata("design:type", String)
-], UpdateUserEntities.prototype, "password", void 0);
+], UpdateUserEntities.prototype, "password_hash", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ type: 'int', default: 1 }),
+    (0, typeorm_1.Column)({ type: 'int' }),
     __metadata("design:type", Number)
-], UpdateUserEntities.prototype, "role", void 0);
+], UpdateUserEntities.prototype, "role_id", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ type: 'int', default: 1 }),
+    (0, typeorm_1.Column)({ type: 'int' }),
     __metadata("design:type", Number)
-], UpdateUserEntities.prototype, "status", void 0);
+], UpdateUserEntities.prototype, "active", void 0);
 UpdateUserEntities = __decorate([
     (0, typeorm_1.Entity)('users')
 ], UpdateUserEntities);

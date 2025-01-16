@@ -12,16 +12,17 @@ usersRouter.post('/login', async(req:Request, res:Response) => {
     return await controllerUsers.login(req, res);
 });
 
+// 
 usersRouter.get('/getAll',  async(req: Request, res: Response) => {
     return await controllerUsers.getAll(req, res);
 })
-usersRouter.get('/findById',  async(req: Request, res: Response) => {
+usersRouter.get('/getById/:id',  async(req: Request, res: Response) => {
     return await controllerUsers.getById(req, res);
 })
-usersRouter.get('/update',  async(req: Request, res: Response) => {
+usersRouter.patch('/update/:id',  async(req: Request, res: Response) => {
     return await controllerUsers.update(req, res);
 })
-usersRouter.get('/exclude',  async(req: Request, res: Response) => {
+usersRouter.delete('/exclude/:id',  async(req: Request, res: Response) => {
     return await controllerUsers.exclude(req, res);
 })
 

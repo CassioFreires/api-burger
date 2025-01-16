@@ -13,12 +13,12 @@ export default class CreateUserEntities implements InterfaceCreateUser {
   email!: string;
 
   @Column()
-  password!: string;
+  password_hash!: string;
+
+  @Column({ type: 'int', default: 3 })
+  role_id!: number; // Padrão 1 - Cliente
 
   @Column({ type: 'int', default: 1 })
-  role!: number; // Padrão 1 - Cliente
-
-  @Column({ type: 'int', default: 1 })
-  status!: number; // Padrão 1 - Ativo
+  active!: number; // Padrão 1 - Ativo
  
 }

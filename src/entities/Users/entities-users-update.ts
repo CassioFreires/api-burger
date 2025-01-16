@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column} from "typeorm";
 import InterfaceUpdateUser from "../../interfaces/Users/interface-update-user";
 
 @Entity('users')
@@ -13,12 +13,12 @@ export default class UpdateUserEntities implements InterfaceUpdateUser {
   email!: string;
 
   @Column()
-  password!: string;
+  password_hash!: string;
 
-  @Column({ type: 'int', default: 1 })
-  role!: number;
+  @Column({type: 'int'})
+  role_id?: number;
 
-  @Column({ type: 'int', default: 1 })
-  status!: number;
+  @Column({ type: 'int'})
+  active?: number;
 
 }

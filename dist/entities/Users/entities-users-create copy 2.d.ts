@@ -3,7 +3,7 @@ export default class CreateUserEntities implements InterfaceCreateUser {
     id: number;
     name: string;
     email: string;
-    password: string;
-    role: number;
-    status: number;
+    password_hash: string;
+    role_id: number;
+    active: number;
 }

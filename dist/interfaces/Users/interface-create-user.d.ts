@@ -1,7 +1,7 @@
 export default interface InterfaceCreateUser {
     name: string;
     email: string;
-    password: string;
-    role?: number;
-    status?: number;
+    password_hash: string;
+    role_id?: number;
+    active?: number;
 }
