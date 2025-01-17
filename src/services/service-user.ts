@@ -16,7 +16,7 @@ export default class ServiceUsers {
     constructor() {
         this.dataBase = new DataBase();
     }
-    
+
     async loginService(bodyLogin: LoginDTO): Promise<any> {
         try {
             // Aqui você pode retornar os dados do usuário ou o que for necessário
@@ -28,6 +28,10 @@ export default class ServiceUsers {
                 },
                 relations: ['roles']
             })
+            if(!user) {
+                console.log('User not found');
+                return null;
+            }
             return user;
         } catch (error) {
             console.error('failed error login:', error);

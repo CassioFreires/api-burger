@@ -35,6 +35,10 @@ class ServiceUsers {
                     },
                     relations: ['roles']
                 });
+                if (!user) {
+                    console.log('User not found');
+                    return null;
+                }
                 return user;
             }
             catch (error) {
