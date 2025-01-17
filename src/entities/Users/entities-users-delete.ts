@@ -13,12 +13,12 @@ export default class DeleteUserEntities implements InterfaceDeleteUser {
   email!: string;
 
   @Column()
-  password!: string;
+  password_hash!: string;
+
+  @Column({ type: 'int', default: 3 })
+  role_id!: number;
 
   @Column({ type: 'int', default: 1 })
-  role!: number;
-
-  @Column({ type: 'int', default: 1 })
-  status!: number;
+  active!: number;
 
 }

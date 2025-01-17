@@ -8,6 +8,7 @@ import CreateUserEntities from "../entities/Users/entities-users-create copy 2";
 import bcrypt from 'bcryptjs';
 import UpdateUserEntities from "../entities/Users/entities-users-update";
 import UpdateUserDTO from "../dtos/Users/dto-update-users";
+import DeleteUserEntities from "../entities/Users/entities-users-delete";
 
 export default class ServiceUsers {
     private dataBase: DataBase;
@@ -15,7 +16,7 @@ export default class ServiceUsers {
     constructor() {
         this.dataBase = new DataBase();
     }
-
+    
     async loginService(bodyLogin: LoginDTO): Promise<any> {
         try {
             // Aqui você pode retornar os dados do usuário ou o que for necessário
@@ -82,7 +83,7 @@ export default class ServiceUsers {
         }
     }
 
-    // crud
+    // crud básico
     async getAllService() {
         try {
             const users = (await this.dataBase.connect()).getRepository(LoginEntities).find({
@@ -200,4 +201,27 @@ export default class ServiceUsers {
         }
     }
 
+    async excludeService(id:number) {
+        try {
+            const deleteRepository = (await this.dataBase.connect()).getRepository(DeleteUserEntities);
+            const delete_user = await deleteRepository.findOneBy({id: id});
+            if (delete_user) {
+                await deleteRepository.remove(delete_user);
+                console.log('User delete with successfully')
+                return delete_user;
+            } else {
+                console.log('User not found for deleted');
+                return null
+            }
+        }catch(error) {
+            console.error('failed error delete users:', error);
+            if (error instanceof QueryFailedError) {
+                console.error('Error delete users in database:', error.message);
+                throw new Error('Failed to delete users');
+            } else {
+                console.error('Unexpected error in deleteService:', error);
+                throw new Error('Unexpected error occurred');
+            }
+        }
+    }
 }

@@ -27,15 +27,15 @@ __decorate([
 __decorate([
     (0, typeorm_1.Column)(),
     __metadata("design:type", String)
-], DeleteUserEntities.prototype, "password", void 0);
+], DeleteUserEntities.prototype, "password_hash", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ type: 'int', default: 3 }),
+    __metadata("design:type", Number)
+], DeleteUserEntities.prototype, "role_id", void 0);
 __decorate([
     (0, typeorm_1.Column)({ type: 'int', default: 1 }),
     __metadata("design:type", Number)
-], DeleteUserEntities.prototype, "role", void 0);
-__decorate([
-    (0, typeorm_1.Column)({ type: 'int', default: 1 }),
-    __metadata("design:type", Number)
-], DeleteUserEntities.prototype, "status", void 0);
+], DeleteUserEntities.prototype, "active", void 0);
 DeleteUserEntities = __decorate([
     (0, typeorm_1.Entity)('users')
 ], DeleteUserEntities);

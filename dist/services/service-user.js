@@ -19,6 +19,7 @@ const entities_users_get_1 = __importDefault(require("../entities/Users/entities
 const entities_users_create_copy_2_1 = __importDefault(require("../entities/Users/entities-users-create copy 2"));
 const bcryptjs_1 = __importDefault(require("bcryptjs"));
 const entities_users_update_1 = __importDefault(require("../entities/Users/entities-users-update"));
+const entities_users_delete_1 = __importDefault(require("../entities/Users/entities-users-delete"));
 class ServiceUsers {
     constructor() {
         this.dataBase = new DataBase_1.default();
@@ -97,7 +98,7 @@ class ServiceUsers {
             }
         });
     }
-    // crud
+    // crud básico
     getAllService() {
         return __awaiter(this, void 0, void 0, function* () {
             try {
@@ -207,6 +208,34 @@ class ServiceUsers {
                 }
                 else {
                     console.error('Unexpected error in updateService:', error);
+                    throw new Error('Unexpected error occurred');
+                }
+            }
+        });
+    }
+    excludeService(id) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const deleteRepository = (yield this.dataBase.connect()).getRepository(entities_users_delete_1.default);
+                const delete_user = yield deleteRepository.findOneBy({ id: id });
+                if (delete_user) {
+                    yield deleteRepository.remove(delete_user);
+                    console.log('User delete with successfully');
+                    return delete_user;
+                }
+                else {
+                    console.log('User not found for deleted');
+                    return null;
+                }
+            }
+            catch (error) {
+                console.error('failed error delete users:', error);
+                if (error instanceof typeorm_1.QueryFailedError) {
+                    console.error('Error delete users in database:', error.message);
+                    throw new Error('Failed to delete users');
+                }
+                else {
+                    console.error('Unexpected error in deleteService:', error);
                     throw new Error('Unexpected error occurred');
                 }
             }

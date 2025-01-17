@@ -23,6 +23,7 @@ import PermissionEntities from "../entities/Permissions/entities-permission-get"
 import RolePermissionEntities from "../entities/Role_Permission/entities-rolePermission-get";
 import CreateUserEntities from "../entities/Users/entities-users-create copy 2";
 import UpdateUserEntities from "../entities/Users/entities-users-update";
+import DeleteUserEntities from "../entities/Users/entities-users-delete";
 
 export default class DataBase {
     private conex?: DataSource;
@@ -66,7 +67,8 @@ export default class DataBase {
                 PermissionEntities,
                 RolePermissionEntities,
                 CreateUserEntities,
-                UpdateUserEntities
+                UpdateUserEntities,
+                DeleteUserEntities
 
             ],
             synchronize: false,

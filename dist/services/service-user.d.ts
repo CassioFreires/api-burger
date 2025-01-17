@@ -4,6 +4,7 @@ import CreateUserDTO from "../dtos/Users/dto-create-users";
 import UserEntities from "../entities/Users/entities-users-get";
 import UpdateUserEntities from "../entities/Users/entities-users-update";
 import UpdateUserDTO from "../dtos/Users/dto-update-users";
+import DeleteUserEntities from "../entities/Users/entities-users-delete";
 export default class ServiceUsers {
     private dataBase;
     constructor();
@@ -15,4 +16,5 @@ export default class ServiceUsers {
     updateService(id: number, newUser: UpdateUserDTO): Promise<UpdateUserEntities | {
         error: string;
     } | null>;
+    excludeService(id: number): Promise<DeleteUserEntities | null>;
 }

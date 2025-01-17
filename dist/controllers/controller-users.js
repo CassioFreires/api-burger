@@ -125,7 +125,13 @@ class ControllerUsers {
     exclude(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                // registrar usuário
+                const { id } = req.params;
+                if (!id || isNaN(Number(id)))
+                    return res.status(401).json({ message: 'id invalid', status: 401 });
+                const deleteUser = yield this.serviceUser.excludeService(Number(id));
+                if (!deleteUser || deleteUser == null)
+                    return res.status(401).json({ message: 'User not found for delete' });
+                return res.json({ message: 'User deleted successfully', deleteUser });
             }
             catch (error) {
                 console.error(error);
