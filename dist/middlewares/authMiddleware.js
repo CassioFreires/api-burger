@@ -12,12 +12,14 @@ function AuthMiddleware(req, res, next) {
         const token = (_a = req.headers['authorization']) === null || _a === void 0 ? void 0 : _a.split(' ')[1];
         console.log(token);
         if (!token) {
-            return res.status(403).json({ message: 'Token is required' });
+            res.status(403).json({ message: 'Token is required' });
+            return;
         }
+        // Verifica o token e anexa o payload ao objeto req
         const payload = jsonwebtoken_1.default.verify(token, config_1.JWT_CONFIG.SECRET);
         console.log('Token válido', payload);
-        next();
-        return payload;
+        req.user = payload; // Anexa o payload no req.user
+        next(); // Chama o próximo middleware ou manipulador de rota
     }
     catch (error) {
         res.status(403).json({ message: 'Invalid token' });
