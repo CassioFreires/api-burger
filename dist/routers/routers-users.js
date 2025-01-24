@@ -14,6 +14,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const controller_users_1 = __importDefault(require("../controllers/controller-users"));
+const authMiddleware_1 = require("../middlewares/authMiddleware");
+const RoleMiddleware_1 = require("../middlewares/RoleMiddleware");
 const usersRouter = express_1.default.Router();
 const controllerUsers = new controller_users_1.default();
 usersRouter.post('/register', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -23,16 +25,16 @@ usersRouter.post('/login', (req, res) => __awaiter(void 0, void 0, void 0, funct
     return yield controllerUsers.login(req, res);
 }));
 // 
-usersRouter.get('/getAll', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+usersRouter.get('/getAll', authMiddleware_1.AuthMiddleware, (0, RoleMiddleware_1.RoleMiddleware)(['Admin']), (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     return yield controllerUsers.getAll(req, res);
 }));
-usersRouter.get('/getById/:id', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+usersRouter.get('/getById/:id', authMiddleware_1.AuthMiddleware, (0, RoleMiddleware_1.RoleMiddleware)(['Admin']), (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     return yield controllerUsers.getById(req, res);
 }));
-usersRouter.patch('/update/:id', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+usersRouter.patch('/update/:id', authMiddleware_1.AuthMiddleware, (0, RoleMiddleware_1.RoleMiddleware)(['Admin']), (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     return yield controllerUsers.update(req, res);
 }));
-usersRouter.delete('/exclude/:id', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+usersRouter.delete('/exclude/:id', authMiddleware_1.AuthMiddleware, (0, RoleMiddleware_1.RoleMiddleware)(['Admin']), (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     return yield controllerUsers.exclude(req, res);
 }));
 exports.default = usersRouter;

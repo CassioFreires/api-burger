@@ -14,21 +14,23 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const controllers_promocoes_1 = __importDefault(require("../controllers/controllers-promocoes"));
+const RoleMiddleware_1 = require("../middlewares/RoleMiddleware");
+const authMiddleware_1 = require("../middlewares/authMiddleware");
 const promotionsRouter = express_1.default.Router();
 const controllerPromotions = new controllers_promocoes_1.default();
-promotionsRouter.post('/create', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+promotionsRouter.post('/create', authMiddleware_1.AuthMiddleware, (0, RoleMiddleware_1.RoleMiddleware)(['Admin']), (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     return yield controllerPromotions.create(req, res);
 }));
-promotionsRouter.get('/getAll', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+promotionsRouter.get('/getAll', authMiddleware_1.AuthMiddleware, (0, RoleMiddleware_1.RoleMiddleware)(['Admin', 'Funcionário', 'Cliente']), (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     return yield controllerPromotions.getAll(req, res);
 }));
-promotionsRouter.get('/getById/:id', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+promotionsRouter.get('/getById/:id', authMiddleware_1.AuthMiddleware, (0, RoleMiddleware_1.RoleMiddleware)(['Admin', 'Funcionário', 'Cliente']), (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     return yield controllerPromotions.getById(req, res);
 }));
-promotionsRouter.patch('/update/:id', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+promotionsRouter.patch('/update/:id', authMiddleware_1.AuthMiddleware, (0, RoleMiddleware_1.RoleMiddleware)(['Admin']), (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     return yield controllerPromotions.update(req, res);
 }));
-promotionsRouter.delete('/delete/:id', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+promotionsRouter.delete('/delete/:id', authMiddleware_1.AuthMiddleware, (0, RoleMiddleware_1.RoleMiddleware)(['Admin']), (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     return yield controllerPromotions.exclude(req, res);
 }));
 exports.default = promotionsRouter;

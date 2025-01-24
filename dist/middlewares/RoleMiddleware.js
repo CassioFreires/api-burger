@@ -5,7 +5,7 @@ exports.RoleMiddleware = RoleMiddleware;
 function RoleMiddleware(roles) {
     return (req, res, next) => {
         var _a;
-        const userRole = (_a = req.user) === null || _a === void 0 ? void 0 : _a.role; // O papel do usuário vem do token JWT
+        const userRole = (_a = req.user) === null || _a === void 0 ? void 0 : _a.name; // O papel do usuário vem do token JWT
         if (!userRole) {
             res.status(403).json({ message: 'Role not found' });
             return;

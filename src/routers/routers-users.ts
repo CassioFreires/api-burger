@@ -1,6 +1,8 @@
 import express from 'express';
 import { Request, Response, NextFunction } from 'express';
 import ControllerUsers from '../controllers/controller-users';
+import { AuthMiddleware } from '../middlewares/authMiddleware';
+import { RoleMiddleware } from '../middlewares/RoleMiddleware';
 
 const usersRouter = express.Router();
 const controllerUsers = new ControllerUsers();
@@ -13,16 +15,16 @@ usersRouter.post('/login', async(req:Request, res:Response) => {
 });
 
 // 
-usersRouter.get('/getAll',  async(req: Request, res: Response) => {
+usersRouter.get('/getAll', AuthMiddleware, RoleMiddleware(['Admin']),  async(req: Request, res: Response) => {
     return await controllerUsers.getAll(req, res);
 })
-usersRouter.get('/getById/:id',  async(req: Request, res: Response) => {
+usersRouter.get('/getById/:id', AuthMiddleware, RoleMiddleware(['Admin']),   async(req: Request, res: Response) => {
     return await controllerUsers.getById(req, res);
 })
-usersRouter.patch('/update/:id',  async(req: Request, res: Response) => {
+usersRouter.patch('/update/:id', AuthMiddleware, RoleMiddleware(['Admin']),   async(req: Request, res: Response) => {
     return await controllerUsers.update(req, res);
 })
-usersRouter.delete('/exclude/:id',  async(req: Request, res: Response) => {
+usersRouter.delete('/exclude/:id', AuthMiddleware, RoleMiddleware(['Admin']),   async(req: Request, res: Response) => {
     return await controllerUsers.exclude(req, res);
 })
 
