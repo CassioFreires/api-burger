@@ -21,10 +21,10 @@ const controllerDrinks = new controller_drinks_1.default();
 drinksRouter.post('/create', authMiddleware_1.AuthMiddleware, (0, RoleMiddleware_1.RoleMiddleware)(['Admin']), (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     return yield controllerDrinks.create(req, res);
 }));
-drinksRouter.get('/getAll', authMiddleware_1.AuthMiddleware, (0, RoleMiddleware_1.RoleMiddleware)(['Admin', 'Funcionário', 'Cliente']), (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+drinksRouter.get('/getAll', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     return yield controllerDrinks.getAll(req, res);
 }));
-drinksRouter.get('/getById/:id', authMiddleware_1.AuthMiddleware, (0, RoleMiddleware_1.RoleMiddleware)(['Admin', 'Funcionário', 'Cliente']), (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+drinksRouter.get('/getById/:id', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     return yield controllerDrinks.getById(req, res);
 }));
 drinksRouter.patch('/update/:id', authMiddleware_1.AuthMiddleware, (0, RoleMiddleware_1.RoleMiddleware)(['Admin']), (req, res) => __awaiter(void 0, void 0, void 0, function* () {

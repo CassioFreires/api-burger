@@ -12,11 +12,11 @@ drinksRouter.post('/create', AuthMiddleware, RoleMiddleware(['Admin']), async (r
     return await controllerDrinks.create(req, res);
 });
 
-drinksRouter.get('/getAll', AuthMiddleware, RoleMiddleware(['Admin', 'Funcionário', 'Cliente']), async (req: Request, res: Response): Promise<any> => {
+drinksRouter.get('/getAll', async (req: Request, res: Response): Promise<any> => {
     return await controllerDrinks.getAll(req, res);
 });
 
-drinksRouter.get('/getById/:id', AuthMiddleware, RoleMiddleware(['Admin', 'Funcionário', 'Cliente']), async (req: Request, res: Response): Promise<any> => {
+drinksRouter.get('/getById/:id', async (req: Request, res: Response): Promise<any> => {
     return await controllerDrinks.getById(req, res);
 });
 

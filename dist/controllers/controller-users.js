@@ -26,12 +26,15 @@ class ControllerUsers {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const { email, password_hash } = req.body;
-                console.log(req.body);
+                console.log('passei aq');
+                console.log(email);
+                console.log(password_hash);
                 if (!email || !password_hash) {
                     return res.json({ message: 'Invalid Login', status: 401 });
                 }
                 const loginDto = new dto_login_users_1.default(email, password_hash);
                 const response = yield this.serviceUser.loginService(loginDto);
+                console.log(response);
                 if (!response || response == null)
                     return res.status(401).json({ message: 'Invalid creadentials', status: 401 });
                 // comparando a senha do formulario com a criptgrafada que está na base

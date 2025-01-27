@@ -21,10 +21,10 @@ const controllerCombos = new controller_combos_1.default();
 combosRouter.post('/create', authMiddleware_1.AuthMiddleware, (0, RoleMiddleware_1.RoleMiddleware)(['admin']), (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     return yield controllerCombos.create(req, res);
 }));
-combosRouter.get('/getAll', authMiddleware_1.AuthMiddleware, (0, RoleMiddleware_1.RoleMiddleware)(['Admin', 'Funcionário', 'Cliente']), (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+combosRouter.get('/getAll', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     return yield controllerCombos.getAll(req, res);
 }));
-combosRouter.get('/getById/:id', authMiddleware_1.AuthMiddleware, (0, RoleMiddleware_1.RoleMiddleware)(['Admin', 'Funcionario', 'Cliente']), (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+combosRouter.get('/getById/:id', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     return yield controllerCombos.getById(req, res);
 }));
 combosRouter.patch('/update/:id', authMiddleware_1.AuthMiddleware, (0, RoleMiddleware_1.RoleMiddleware)(['admin']), (req, res) => __awaiter(void 0, void 0, void 0, function* () {

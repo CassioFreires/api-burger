@@ -12,11 +12,11 @@ combosRouter.post('/create', AuthMiddleware, RoleMiddleware(['admin']), async (r
     return await controllerCombos.create(req, res);
 });
 
-combosRouter.get('/getAll', AuthMiddleware, RoleMiddleware(['Admin','Funcionário', 'Cliente']), async (req: Request, res: Response): Promise<any> => {
+combosRouter.get('/getAll', async (req: Request, res: Response): Promise<any> => {
     return await controllerCombos.getAll(req, res);
 });
 
-combosRouter.get('/getById/:id', AuthMiddleware, RoleMiddleware(['Admin','Funcionario', 'Cliente']) , async (req: Request, res: Response): Promise<any> => {
+combosRouter.get('/getById/:id', async (req: Request, res: Response): Promise<any> => {
     return await controllerCombos.getById(req, res);
 });
 

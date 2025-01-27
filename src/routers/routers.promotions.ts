@@ -12,11 +12,11 @@ promotionsRouter.post('/create', AuthMiddleware, RoleMiddleware(['Admin']), asyn
     return await controllerPromotions.create(req, res);
 });
 
-promotionsRouter.get('/getAll', AuthMiddleware, RoleMiddleware(['Admin', 'Funcionário', 'Cliente']),  async (req: Request, res: Response): Promise<any> => {
+promotionsRouter.get('/getAll',  async (req: Request, res: Response): Promise<any> => {
     return await controllerPromotions.getAll(req, res);
 });
 
-promotionsRouter.get('/getById/:id', AuthMiddleware, RoleMiddleware(['Admin', 'Funcionário', 'Cliente']),  async (req: Request, res: Response): Promise<any> => {
+promotionsRouter.get('/getById/:id',  async (req: Request, res: Response): Promise<any> => {
     return await controllerPromotions.getById(req, res);
 });
 

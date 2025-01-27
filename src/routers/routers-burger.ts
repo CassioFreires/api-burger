@@ -12,11 +12,11 @@ burgerRouter.post('/create',  AuthMiddleware, RoleMiddleware(['Admin']), async (
     return await controllerBurger.create(req, res);  // Chama o controlador
 });
 
-burgerRouter.get('/getAll', AuthMiddleware, RoleMiddleware(['Admin','Funcionário', 'Cliente']), async (req: Request, res: Response): Promise<any> => {
+burgerRouter.get('/getAll', async (req: Request, res: Response): Promise<any> => {
     return await controllerBurger.getAll(req, res);
 });
 
-burgerRouter.get('/getById/:id', AuthMiddleware, RoleMiddleware(['Admin','Funcionário', 'Cliente']), async (req: Request, res: Response): Promise<any> => {
+burgerRouter.get('/getById/:id', async (req: Request, res: Response): Promise<any> => {
     return await controllerBurger.getById(req, res);
 });
 
