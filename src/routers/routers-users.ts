@@ -1,5 +1,5 @@
 import express from 'express';
-import { Request, Response, NextFunction } from 'express';
+import { Request, Response } from 'express';
 import ControllerUsers from '../controllers/controller-users';
 import { AuthMiddleware } from '../middlewares/authMiddleware';
 import { RoleMiddleware } from '../middlewares/RoleMiddleware';

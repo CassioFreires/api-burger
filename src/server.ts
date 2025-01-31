@@ -6,7 +6,9 @@ import cors from 'cors';
 import combosRouter from './routers/routers-combos';
 import drinksRouter from './routers/routers-drinks';
 import usersRouter from './routers/routers-users';
+import orderRouters from './routers/routers.order';
 import env from 'dotenv'
+
 
 const db = new DataBase();
 const app = express();
@@ -23,6 +25,7 @@ app.use('/promotions', promotionsRouter);
 app.use('/combos', combosRouter);
 app.use('/drinks', drinksRouter);
 app.use('/user', usersRouter);
+app.use('/order', orderRouters);
 
 
 db.connect()
