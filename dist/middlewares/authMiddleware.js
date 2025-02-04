@@ -11,17 +11,18 @@ function AuthMiddleware(req, res, next) {
     try {
         const token = (_a = req.headers['authorization']) === null || _a === void 0 ? void 0 : _a.split(' ')[1];
         if (!token) {
+            console.log('passei aq token');
             res.status(403).json({ message: 'Token is required' });
             return;
         }
         // Verifica o token e anexa o payload ao objeto req
         const payload = jsonwebtoken_1.default.verify(token, config_1.JWT_CONFIG.SECRET);
-        console.log('Token válido', payload);
         req.user = payload; // Anexa o payload no req.user
         next(); // Chama o próximo middleware ou manipulador de rota
     }
     catch (error) {
-        res.status(403).json({ message: 'Invalid token' });
+        console.log(error);
+        res.status(500).json({ message: 'Invalid token' });
     }
 }
 //# sourceMappingURL=authMiddleware.js.map

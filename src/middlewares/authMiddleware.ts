@@ -7,18 +7,19 @@ export function AuthMiddleware(req: Request, res: Response, next: NextFunction):
         const token = req.headers['authorization']?.split(' ')[1];
 
         if (!token) {
+            console.log('passei aq token')
              res.status(403).json({ message: 'Token is required' });
              return;
         }
 
         // Verifica o token e anexa o payload ao objeto req
         const payload = jwt.verify(token, JWT_CONFIG.SECRET);
-        console.log('Token válido', payload);
 
         req.user = payload;  // Anexa o payload no req.user
 
         next();  // Chama o próximo middleware ou manipulador de rota
     } catch (error) {
-        res.status(403).json({ message: 'Invalid token' });
+        console.log(error)
+        res.status(500).json({ message: 'Invalid token' });
     }
 }

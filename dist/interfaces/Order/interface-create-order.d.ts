@@ -1,11 +1,8 @@
-export default interface InterfaceOrder {
+export default interface InterfaceCreateOrder {
     order_id: number;
-    customer_id: number;
-    total_price: number;
+    user_id: number;
+    total_value: number;
     status: string;
-    order_date: Date;
-    completed_at: Date | null;
-    payment_method: string;
-    delivery_address: string;
-    delivery_time: Date;
+    created_at: Date;
+    updated_at: Date;
 }

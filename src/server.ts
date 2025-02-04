@@ -8,6 +8,7 @@ import drinksRouter from './routers/routers-drinks';
 import usersRouter from './routers/routers-users';
 import orderRouters from './routers/routers.order';
 import env from 'dotenv'
+import addressRouter from './routers/routers-address';
 
 
 const db = new DataBase();
@@ -26,6 +27,7 @@ app.use('/combos', combosRouter);
 app.use('/drinks', drinksRouter);
 app.use('/user', usersRouter);
 app.use('/order', orderRouters);
+app.use('/address', addressRouter);
 
 
 db.connect()
