@@ -6,9 +6,9 @@ import cors from 'cors';
 import combosRouter from './routers/routers-combos';
 import drinksRouter from './routers/routers-drinks';
 import usersRouter from './routers/routers-users';
-import orderRouters from './routers/routers.order';
 import env from 'dotenv'
 import addressRouter from './routers/routers-address';
+import ordersRouter from './routers/routers-orders';
 
 
 const db = new DataBase();
@@ -26,8 +26,8 @@ app.use('/promotions', promotionsRouter);
 app.use('/combos', combosRouter);
 app.use('/drinks', drinksRouter);
 app.use('/user', usersRouter);
-app.use('/order', orderRouters);
 app.use('/address', addressRouter);
+app.use('/orders', ordersRouter);
 
 
 db.connect()

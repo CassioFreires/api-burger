@@ -24,5 +24,11 @@ addressRouter.post('/create', authMiddleware_1.AuthMiddleware, (0, RoleMiddlewar
 addressRouter.get('/getByUserId', authMiddleware_1.AuthMiddleware, (0, RoleMiddleware_1.RoleMiddleware)(['Cliente', 'Admin', 'Funcionário']), (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     return yield controllerAddress.getByUserId(req, res);
 }));
+addressRouter.patch('/update', authMiddleware_1.AuthMiddleware, (0, RoleMiddleware_1.RoleMiddleware)(['Cliente', 'Admin', 'Funcionário']), (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    return yield controllerAddress.update(req, res);
+}));
+addressRouter.delete('/remove', authMiddleware_1.AuthMiddleware, (0, RoleMiddleware_1.RoleMiddleware)(['Cliente', 'Admin', 'Funcionário']), (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    return yield controllerAddress.exlucde(req, res);
+}));
 exports.default = addressRouter;
 //# sourceMappingURL=routers-address.js.map

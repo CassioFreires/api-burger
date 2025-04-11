@@ -1,0 +1,1 @@
+{"version":3,"file":"dto-create-orders.js","sourceRoot":"","sources":["../../../src/dtos/Orders/dto-create-orders.ts"],"names":[],"mappings":";;AAAA,MAAqB,QAAQ;IAMzB,YAAY,OAAe,EAAE,UAAkB,EAAE,WAAmB,EAAE,YAA+D;QACjI,IAAI,CAAC,OAAO,GAAG,OAAO,CAAC;QACvB,IAAI,CAAC,UAAU,GAAG,UAAU,CAAC;QAC7B,IAAI,CAAC,WAAW,GAAG,WAAW,CAAC;QAC/B,IAAI,CAAC,YAAY,GAAG,YAAY,CAAC;IACrC,CAAC;CACJ;AAZD,2BAYC"}

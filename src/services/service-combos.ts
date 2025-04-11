@@ -105,7 +105,6 @@ export default class ServiceCombos {
     }
 
     async excludeService(id: number) {
-        console.log(id)
         try {
             const updateRepository = (await this.database.connect()).getRepository(CombosDeleteEntities);
             const update_combos = await updateRepository.findOneBy({combo_id: id });

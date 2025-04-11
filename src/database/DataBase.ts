@@ -26,6 +26,10 @@ import UpdateUserEntities from "../entities/Users/entities-users-update";
 import DeleteUserEntities from "../entities/Users/entities-users-delete";
 import CreateAddressEntities from "../entities/Address/entities-address-create";
 import AddressEntities from "../entities/Address/entities-address.get";
+import UpdateAddressEntities from "../entities/Address/entities-address-update";
+import DeleteAddressEntities from "../entities/Address/entities-address-delete";
+import OrderEntities from "../entities/Orders/entities-orders";
+import OrderEntitiesGetAll from "../entities/Orders/entities-get-orders";
 
 export default class DataBase {
     private conex?: DataSource;
@@ -43,7 +47,7 @@ export default class DataBase {
                 BurgerEntities,
                 UpdateBurgersEntites,
                 CreateBurgersEntities,
-                
+
                 // promotions
                 PromotionsEntities,
                 UpdatePromotionsEntites,
@@ -73,9 +77,14 @@ export default class DataBase {
                 DeleteUserEntities,
 
                 // Address
+                UpdateAddressEntities,
                 CreateAddressEntities,
-                AddressEntities
+                AddressEntities,
+                DeleteAddressEntities,
 
+                // orders
+                OrderEntities,
+                OrderEntitiesGetAll
             ],
             synchronize: false,
             logging: true

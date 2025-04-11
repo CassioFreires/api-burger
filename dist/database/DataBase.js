@@ -38,6 +38,10 @@ const entities_users_update_1 = __importDefault(require("../entities/Users/entit
 const entities_users_delete_1 = __importDefault(require("../entities/Users/entities-users-delete"));
 const entities_address_create_1 = __importDefault(require("../entities/Address/entities-address-create"));
 const entities_address_get_1 = __importDefault(require("../entities/Address/entities-address.get"));
+const entities_address_update_1 = __importDefault(require("../entities/Address/entities-address-update"));
+const entities_address_delete_1 = __importDefault(require("../entities/Address/entities-address-delete"));
+const entities_orders_1 = __importDefault(require("../entities/Orders/entities-orders"));
+const entities_get_orders_1 = __importDefault(require("../entities/Orders/entities-get-orders"));
 class DataBase {
     connect() {
         return __awaiter(this, void 0, void 0, function* () {
@@ -78,8 +82,13 @@ class DataBase {
                     entities_users_update_1.default,
                     entities_users_delete_1.default,
                     // Address
+                    entities_address_update_1.default,
                     entities_address_create_1.default,
-                    entities_address_get_1.default
+                    entities_address_get_1.default,
+                    entities_address_delete_1.default,
+                    // orders
+                    entities_orders_1.default,
+                    entities_get_orders_1.default
                 ],
                 synchronize: false,
                 logging: true

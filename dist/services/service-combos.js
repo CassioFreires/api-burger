@@ -122,7 +122,6 @@ class ServiceCombos {
     }
     excludeService(id) {
         return __awaiter(this, void 0, void 0, function* () {
-            console.log(id);
             try {
                 const updateRepository = (yield this.database.connect()).getRepository(entities_combo_delete_1.default);
                 const update_combos = yield updateRepository.findOneBy({ combo_id: id });

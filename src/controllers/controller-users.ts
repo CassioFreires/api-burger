@@ -16,10 +16,7 @@ export default class ControllerUsers {
     async login(req: Request, res: Response): Promise<any> {
         try {
             const { email, password_hash } = req.body;
-            console.log('passei aq')
 
-            console.log(email)
-            console.log(password_hash)
             
             if (!email || !password_hash) {
                 return res.json({ message: 'Invalid Login', status: 401 });
@@ -28,7 +25,6 @@ export default class ControllerUsers {
             const loginDto = new LoginDTO(email, password_hash);
 
             const response = await this.serviceUser.loginService(loginDto);
-            console.log(response)
             if(!response || response == null) return res.status(401).json({message:'Invalid creadentials', status: 401});
             
             // comparando a senha do formulario com a criptgrafada que está na base

@@ -14,5 +14,13 @@ addressRouter.get('/getByUserId',  AuthMiddleware, RoleMiddleware(['Cliente','Ad
     return await controllerAddress.getByUserId(req, res);
 });
 
+addressRouter.patch('/update',  AuthMiddleware, RoleMiddleware(['Cliente','Admin', 'Funcionário']), async (req: Request, res: Response): Promise<any> => {
+    return await controllerAddress.update(req, res);
+});
+
+addressRouter.delete('/remove',  AuthMiddleware, RoleMiddleware(['Cliente','Admin', 'Funcionário']), async (req: Request, res: Response): Promise<any> => {
+    return await controllerAddress.exlucde(req, res);
+});
+
 
 export default addressRouter;

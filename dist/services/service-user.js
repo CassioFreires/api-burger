@@ -33,7 +33,7 @@ class ServiceUsers {
                     where: {
                         email: bodyLogin.email
                     },
-                    relations: ['roles']
+                    relations: ['roles'],
                 });
                 if (!user) {
                     console.log('User not found');

@@ -4,4 +4,6 @@ export default class ControllerAddress {
     constructor();
     create(req: Request, res: Response): Promise<Response>;
     getByUserId(req: Request, res: Response): Promise<Response>;
+    update(req: Request, res: Response): Promise<Response>;
+    exlucde(req: Request, res: Response): Promise<Response>;
 }
