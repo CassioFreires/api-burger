@@ -78,6 +78,27 @@ class ServiceOrders {
             }
         });
     }
+    // Método para buscar um pedido com os itens 
+    getByIdService(idOrder) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const orderRepo = (yield this.database.connect()).manager.getRepository(entities_get_orders_1.default);
+                const pedidos = yield orderRepo.findOne({
+                    where: { order_id: idOrder },
+                    relations: ['user', 'endereco'],
+                    order: {
+                        data_hora_pedido: 'DESC',
+                    },
+                });
+                console.log("✅ Busca dos pedidos realizados com sucesso!");
+                return pedidos;
+            }
+            catch (err) {
+                console.error("❌ Erro buscar pedidos:", err);
+                throw new Error("Erro ao encontrar os pedidos.");
+            }
+        });
+    }
     getAllService() {
         return __awaiter(this, void 0, void 0, function* () {
             try {
@@ -118,6 +139,27 @@ class ServiceOrders {
             catch (error) {
                 console.error("❌ Erro ao atualizar pedido:", error);
                 throw new Error("Erro ao atualizar pedido.");
+            }
+        });
+    }
+    excludeService(id) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const orderRepo = (yield this.database.connect()).manager.getRepository(entities_orders_1.default); // Certifique-se que aqui é a entidade, não o DTO
+                // Busca o pedido pelo ID
+                const order = yield orderRepo.findOne({ where: { order_id: id } });
+                if (!order) {
+                    console.log(`⚠️ Pedido com ID ${id} não encontrado.`);
+                    return null;
+                }
+                // Remove o pedido
+                yield orderRepo.remove(order);
+                console.log(`🗑️ Pedido ${id} removido com sucesso!`);
+                return { message: "Pedido removido com sucesso." };
+            }
+            catch (error) {
+                console.error("❌ Erro ao remover pedido:", error);
+                throw new Error("Erro ao remover pedido.");
             }
         });
     }

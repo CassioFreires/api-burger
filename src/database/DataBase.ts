@@ -87,7 +87,10 @@ export default class DataBase {
                 OrderEntitiesGetAll
             ],
             synchronize: false,
-            logging: true
+            logging: true,
+            extra: {
+                connectionLimit: 20 // ajuste conforme capacidade do servidor
+            }
         });
 
         if (!this.conex.isInitialized) {

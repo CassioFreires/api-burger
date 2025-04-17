@@ -8,7 +8,7 @@ const dotenv_1 = __importDefault(require("dotenv"));
 dotenv_1.default.config();
 exports.JWT_CONFIG = {
     SECRET: process.env.JWT_SECRET || 'defaultSecret',
-    EXPIRATION: process.env.JWT_EXPIRATION || '1h',
+    EXPIRATION: process.env.JWT_EXPIRATION || '24h',
     ISSUER: process.env.JWT_ISSUER || 'myApp'
 };
 //# sourceMappingURL=config.js.map

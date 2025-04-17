@@ -91,7 +91,10 @@ class DataBase {
                     entities_get_orders_1.default
                 ],
                 synchronize: false,
-                logging: true
+                logging: true,
+                extra: {
+                    connectionLimit: 20 // ajuste conforme capacidade do servidor
+                }
             });
             if (!this.conex.isInitialized) {
                 return this.conex.initialize();

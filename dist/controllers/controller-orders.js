@@ -44,6 +44,26 @@ class ControllerOrders {
             }
         });
     }
+    getAllById(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const { idOrder } = req.params;
+                if (!idOrder || isNaN(Number(idOrder))) {
+                    return res.status(400).json({ message: '❌ ID inválido', status: 400 });
+                }
+                const orders = yield this.serviceOrders.getByIdService(Number(idOrder));
+                console.log(orders);
+                if (!orders) {
+                    return res.json({ message: 'No orders found', status: 404 });
+                }
+                return res.status(200).json({ message: 'Orders retrieved successfully', orders });
+            }
+            catch (error) {
+                console.error('Failed to retrieve orders', error);
+                return res.status(500).json({ message: 'Internal server error', status: 500 });
+            }
+        });
+    }
     // // Obter todos os pedidos
     getAll(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -90,6 +110,27 @@ class ControllerOrders {
                 console.error('❌ Falha ao atualizar pedido:', error);
                 return res.status(500).json({
                     message: '🚨 Erro interno ao atualizar pedido',
+                    status: 500
+                });
+            }
+        });
+    }
+    exclude(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const { id } = req.params;
+                if (!id || isNaN(Number(id))) {
+                    return res.status(400).json({ message: '❌ ID inválido', status: 400 });
+                }
+                yield this.serviceOrders.excludeService(Number(id));
+                return res.status(200).json({
+                    message: '✅ Pedido deletado com sucesso!',
+                });
+            }
+            catch (error) {
+                console.error('❌ Falha ao deletado pedido:', error);
+                return res.status(500).json({
+                    message: '🚨 Erro interno ao deletado pedido',
                     status: 500
                 });
             }

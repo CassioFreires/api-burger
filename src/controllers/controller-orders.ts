@@ -39,7 +39,24 @@ export default class ControllerOrders {
         }
     }
 
+    async getAllById(req: Request, res: Response): Promise<Response<Response>> {
+        try {
+            const {idOrder} = req.params;
+            if (!idOrder || isNaN(Number(idOrder))) {
+                return res.status(400).json({ message: '❌ ID inválido', status: 400 });
+            }
+            const orders = await this.serviceOrders.getByIdService(Number(idOrder));
+            console.log(orders)
+            if (!orders) {
+                return res.json({ message: 'No orders found', status: 404 });
+            }
 
+            return res.status(200).json({ message: 'Orders retrieved successfully', orders });
+        } catch (error) {
+            console.error('Failed to retrieve orders', error);
+            return res.status(500).json({ message: 'Internal server error', status: 500 });
+        }
+    }
 
     // // Obter todos os pedidos
     async getAll(req: Request, res: Response): Promise<Response<Response>> {
@@ -96,46 +113,28 @@ export default class ControllerOrders {
         }
     }
 
+    async exclude(req: Request, res: Response): Promise<Response> {
+        try {
+            const { id } = req.params;
 
-    // // Obter pedido por ID
-    // async getById(req: Request, res: Response): Promise<Response<InterfaceResponseOrders>> {
-    //     try {
-    //         const { id } = req.params;
-    //         if (!id || isNaN(Number(id))) {
-    //             return res.json({ message: 'Invalid ID', status: 400 });
-    //         }
+            if (!id || isNaN(Number(id))) {
+                return res.status(400).json({ message: '❌ ID inválido', status: 400 });
+            }
 
-    //         const order = await this.serviceOrders.getByIdService(Number(id));
-    //         if (!order) {
-    //             return res.json({ message: 'Order not found', status: 404 });
-    //         }
+            await this.serviceOrders.excludeService(Number(id));
 
-    //         return res.status(200).json({ message: 'Order retrieved successfully', order });
-    //     } catch (error) {
-    //         console.error('Failed to retrieve order', error);
-    //         return res.status(500).json({ message: 'Internal server error', status: 500 });
-    //     }
-    // }
+            return res.status(200).json({
+                message: '✅ Pedido deletado com sucesso!',
+                
+            });
 
+        } catch (error) {
+            console.error('❌ Falha ao deletado pedido:', error);
+            return res.status(500).json({
+                message: '🚨 Erro interno ao deletado pedido',
+                status: 500
+            });
+        }
+    }
 
-
-    // // Excluir pedido
-    // async exclude(req: Request, res: Response): Promise<Response<InterfaceResponseOrders>> {
-    //     try {
-    //         const { id } = req.params;
-    //         if (!id || isNaN(Number(id))) {
-    //             return res.json({ message: 'Invalid ID', status: 400 });
-    //         }
-
-    //         const deletedOrder = await this.serviceOrders.deleteService(Number(id));
-    //         if (!deletedOrder) {
-    //             return res.status(404).json({ message: 'Order not found or failed to delete', status: 404 });
-    //         }
-
-    //         return res.status(200).json({ message: 'Order deleted successfully', deletedOrder });
-    //     } catch (error) {
-    //         console.error('Failed to delete order', error);
-    //         return res.status(500).json({ message: 'Internal server error', status: 500 });
-    //     }
-    // }
 }

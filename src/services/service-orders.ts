@@ -97,6 +97,28 @@ export default class ServiceOrders {
         }
     }
 
+    // Método para buscar um pedido com os itens 
+    async getByIdService(idOrder: number) {
+        try {
+            const orderRepo = (await this.database.connect()).manager.getRepository(OrderEntitiesGetAll);
+            const pedidos = await orderRepo.findOne({
+                where: { order_id: idOrder },
+                relations: ['user', 'endereco'],
+                order: {
+                    data_hora_pedido: 'DESC',
+                },
+            });
+
+            console.log("✅ Busca dos pedidos realizados com sucesso!");
+
+            return pedidos;
+
+        } catch (err) {
+            console.error("❌ Erro buscar pedidos:", err);
+            throw new Error("Erro ao encontrar os pedidos.");
+        }
+    }
+
     async getAllService() {
         try {
             const orderRepo = (await this.database.connect()).manager.getRepository(OrderEntitiesGetAll);
@@ -116,35 +138,60 @@ export default class ServiceOrders {
             throw new Error("Erro ao encontrar os pedidos.");
         }
     }
+
     async updateOrderService(id: number, orderUpdateDTO: OrderUpdateStatusDTO) {
         try {
             const connection = await this.database.connect();
             const orderRepo = connection.manager.getRepository(OrderEntities);
-    
-            const order:any = await orderRepo.findOne({ where: { order_id: id } });
-    
+
+            const order: any = await orderRepo.findOne({ where: { order_id: id } });
+
             if (!order) return null;
-    
+
             if (orderUpdateDTO.status_do_pedido) {
                 order.status_do_pedido = orderUpdateDTO.status_do_pedido;
             }
-    
+
             if (orderUpdateDTO.total_value) {
                 order.total_value = orderUpdateDTO.total_value;
             }
-    
+
             await orderRepo.save(order);
-    
+
             console.log(`✅ Pedido ${id} atualizado para status: ${order.status_do_pedido}`);
-    
+
             return order;
-    
+
         } catch (error) {
             console.error("❌ Erro ao atualizar pedido:", error);
             throw new Error("Erro ao atualizar pedido.");
         }
     }
-    
+
+    async excludeService(id: number) {
+        try {
+            const orderRepo = (await this.database.connect()).manager.getRepository(OrderEntities); // Certifique-se que aqui é a entidade, não o DTO
+
+            // Busca o pedido pelo ID
+            const order = await orderRepo.findOne({ where: { order_id: id } });
+
+            if (!order) {
+                console.log(`⚠️ Pedido com ID ${id} não encontrado.`);
+                return null;
+            }
+
+            // Remove o pedido
+            await orderRepo.remove(order);
+
+            console.log(`🗑️ Pedido ${id} removido com sucesso!`);
+            return { message: "Pedido removido com sucesso." };
+
+        } catch (error) {
+            console.error("❌ Erro ao remover pedido:", error);
+            throw new Error("Erro ao remover pedido.");
+        }
+    }
+
 
 }
 

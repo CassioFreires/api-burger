@@ -22,6 +22,10 @@ const controllerOrders = new controller_orders_1.default();
 ordersRouter.post('/create', authMiddleware_1.AuthMiddleware, (0, RoleMiddleware_1.RoleMiddleware)(['Admin', 'Funcionário', 'Cliente']), (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     return yield controllerOrders.create(req, res);
 }));
+// Obter o pedido by id
+ordersRouter.get('/getById/:idOrder', authMiddleware_1.AuthMiddleware, (0, RoleMiddleware_1.RoleMiddleware)(['Admin', 'Funcionário']), (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    return yield controllerOrders.getAllById(req, res);
+}));
 // Obter todos os pedidos
 ordersRouter.get('/getAll', authMiddleware_1.AuthMiddleware, (0, RoleMiddleware_1.RoleMiddleware)(['Admin', 'Funcionário']), (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     return yield controllerOrders.getAll(req, res);
@@ -30,17 +34,9 @@ ordersRouter.get('/getAll', authMiddleware_1.AuthMiddleware, (0, RoleMiddleware_
 ordersRouter.patch('/updateStatus/:id', authMiddleware_1.AuthMiddleware, (0, RoleMiddleware_1.RoleMiddleware)(['Admin', 'Funcionário']), (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     return yield controllerOrders.updateStatus(req, res);
 }));
-// // Obter pedido por ID
-// ordersRouter.get('/getById/:id', AuthMiddleware, async (req: Request, res: Response): Promise<any> => {
-//     return await controllerOrders.getById(req, res);
-// });
-// // Atualizar um pedido (Ex: mudar status de um pedido)
-// ordersRouter.patch('/update/:id', AuthMiddleware, RoleMiddleware(['Admin']), async (req: Request, res: Response): Promise<any> => {
-//     return await controllerOrders.update(req, res);
-// });
-// // Excluir um pedido
-// ordersRouter.delete('/delete/:id', AuthMiddleware, RoleMiddleware(['Admin']), async (req: Request, res: Response): Promise<any> => {
-//     return await controllerOrders.exclude(req, res);
-// });
+// Excluir um pedido
+ordersRouter.delete('/delete/:id', authMiddleware_1.AuthMiddleware, (0, RoleMiddleware_1.RoleMiddleware)(['Admin', 'Funcionário']), (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    return yield controllerOrders.exclude(req, res);
+}));
 exports.default = ordersRouter;
 //# sourceMappingURL=routers-orders.js.map

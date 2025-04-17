@@ -11,6 +11,11 @@ ordersRouter.post('/create', AuthMiddleware, RoleMiddleware(['Admin', 'Funcioná
     return await controllerOrders.create(req, res);
 });
 
+// Obter o pedido by id
+ordersRouter.get('/getById/:idOrder', AuthMiddleware, RoleMiddleware(['Admin', 'Funcionário']), async (req: Request, res: Response): Promise<any> => {
+    return await controllerOrders.getAllById(req, res);
+});
+
 // Obter todos os pedidos
 ordersRouter.get('/getAll', AuthMiddleware, RoleMiddleware(['Admin', 'Funcionário']), async (req: Request, res: Response): Promise<any> => {
     return await controllerOrders.getAll(req, res);
@@ -21,19 +26,10 @@ ordersRouter.patch('/updateStatus/:id', AuthMiddleware, RoleMiddleware(['Admin',
     return await controllerOrders.updateStatus(req, res);
 });
 
-// // Obter pedido por ID
-// ordersRouter.get('/getById/:id', AuthMiddleware, async (req: Request, res: Response): Promise<any> => {
-//     return await controllerOrders.getById(req, res);
-// });
 
-// // Atualizar um pedido (Ex: mudar status de um pedido)
-// ordersRouter.patch('/update/:id', AuthMiddleware, RoleMiddleware(['Admin']), async (req: Request, res: Response): Promise<any> => {
-//     return await controllerOrders.update(req, res);
-// });
-
-// // Excluir um pedido
-// ordersRouter.delete('/delete/:id', AuthMiddleware, RoleMiddleware(['Admin']), async (req: Request, res: Response): Promise<any> => {
-//     return await controllerOrders.exclude(req, res);
-// });
+// Excluir um pedido
+ordersRouter.delete('/delete/:id', AuthMiddleware, RoleMiddleware(['Admin', 'Funcionário']), async (req: Request, res: Response): Promise<any> => {
+    return await controllerOrders.exclude(req, res);
+});
 
 export default ordersRouter;
