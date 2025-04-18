@@ -6,6 +6,8 @@ import UpdateBurgersEntites from "../entities/Burgers/entites-burgers-update";
 import DeleteBurgersDTO from "../dtos/Burgers/dto-delete-burgers";
 import CreateBurgersDTO from "../dtos/Burgers/dto-create-burgers";
 import CreateBurgersEntities from "../entities/Burgers/entities-burgers-create";
+import { getFromCache } from "../utils/cache";
+import { setFromCache } from "../utils/cache";
 
 export default class ServiceBurger {
     private dataBase: DataBase;
@@ -45,6 +47,7 @@ export default class ServiceBurger {
                     id: 'ASC'
                 }
             });
+
             return burgers;
         } catch (error) {
             console.error('failed error find burger:', error);

@@ -18,9 +18,74 @@ const authUtils_1 = require("../utils/authUtils");
 const dto_create_users_1 = __importDefault(require("../dtos/Users/dto-create-users"));
 const bcryptjs_1 = __importDefault(require("bcryptjs"));
 const dto_update_users_1 = __importDefault(require("../dtos/Users/dto-update-users"));
+const twilio_1 = __importDefault(require("twilio"));
+const nodemailer_1 = __importDefault(require("nodemailer"));
+// Configurar o Twilio para enviar SMS
+const client = (0, twilio_1.default)(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN);
+// Função para enviar o e-mail com o código de autenticação
+const sendEmail = (email, code) => __awaiter(void 0, void 0, void 0, function* () {
+    const transporter = nodemailer_1.default.createTransport({
+        service: 'gmail', // Usando Gmail como serviço SMTP
+        auth: {
+            user: 'cassiosouzaaa2@gmail.com', // Seu e-mail
+            pass: 'fozs dccy rlgx ahga' // Sua senha de e-mail (ou senha de app no Gmail)
+        }
+    });
+    const mailOptions = {
+        from: 'cassiosouzaaa2@gmail.com', // Remetente
+        to: email, // Destinatário
+        subject: 'Código de Autenticação', // Assunto do e-mail
+        text: `Seu código de autenticação é: ${code}`, // Corpo do e-mail
+    };
+    try {
+        yield transporter.sendMail(mailOptions);
+        console.log('Código de autenticação enviado por e-mail');
+    }
+    catch (error) {
+        console.error('Erro ao enviar e-mail:', error);
+    }
+});
+const generate2FACode = () => {
+    return Math.floor(100000 + Math.random() * 900000).toString(); // Gera um código de 6 dígitos
+};
 class ControllerUsers {
     constructor() {
         this.serviceUser = new service_user_1.default();
+    }
+    verify2fa(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const { code } = req.body;
+                if (!req.session.twoFactorCode || !req.session.twoFactorExpires) {
+                    return res.status(400).json({ message: 'Sessão inválida ou expirada' });
+                }
+                if (Date.now() > req.session.twoFactorExpires) {
+                    return res.status(401).json({ message: 'Código expirado. Tente novamente.' });
+                }
+                if (code !== req.session.twoFactorCode) {
+                    return res.status(401).json({ message: 'Código inválido' });
+                }
+                const user = req.session.userData;
+                if (!user) {
+                    return res.status(400).json({ message: 'Dados do usuário não encontrados na sessão' });
+                }
+                const token = (0, authUtils_1.generateToken)({
+                    id: user.id,
+                    name: user.name,
+                    email: user.email,
+                    roles: user.role_name,
+                });
+                // Limpar o 2FA da sessão
+                delete req.session.twoFactorCode;
+                delete req.session.twoFactorExpires;
+                delete req.session.userData;
+                return res.status(200).json({ message: '2FA verificado com sucesso', token });
+            }
+            catch (error) {
+                console.error("❌ Erro na verificação 2FA:", error);
+                return res.status(500).json({ message: 'Erro interno no servidor' });
+            }
+        });
     }
     login(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -37,8 +102,31 @@ class ControllerUsers {
                 const isPasswordEquals = yield bcryptjs_1.default.compare(password_hash, response.password_hash);
                 if (!isPasswordEquals)
                     return res.json({ message: 'Invalid credentials', status: 401 });
+                console.log(response);
+                // Verificar se o 2FA está ativado para o usuário
+                if (response.is2FAEnabled) {
+                    const code = generate2FACode(); // Gerar código 2FA
+                    console.log(code);
+                    // ⚠️ Salvar os dados do usuário para uso depois do 2FA
+                    req.session.userData = {
+                        id: response.id,
+                        name: response.name,
+                        email: response.email,
+                        role_name: response.role_name
+                    };
+                    // Salvar o código temporariamente (em memória ou banco de dados) e enviar via SMS
+                    req.session.twoFactorCode = code;
+                    req.session.twoFactorExpires = Date.now() + 5 * 60 * 1000; // Expira em 5 minutos
+                    // await send2FACode(response.phoneNumber, code); // Enviar código por SMS
+                    yield sendEmail('cassio.souza@ancar.com.br', code); // Enviar código por SMS
+                    return res.json({ message: 'Código 2FA enviado. Insira o código para continuar', status: 200 });
+                }
                 const token = (0, authUtils_1.generateToken)({ id: response.id, name: response.name, email: response.email, roles: response.role_name });
-                res.json({ message: 'login OK', status: 201, response, token });
+                // res.json({ message: 'login OK', status: 201, response, token });
+                res.json({
+                    "message": "Código 2FA enviado. Insira o código para continuar",
+                    "status": 200
+                });
                 return token;
             }
             catch (error) {

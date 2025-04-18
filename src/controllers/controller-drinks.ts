@@ -1,11 +1,10 @@
-import express from 'express';
 import { Request, Response } from 'express';
 import InterfaceResponseDrinks from '../interfaces/Drinks/interface-response-drinks';
-import DrinksDTO  from '../dtos/Drinks/dto-drinks';
 import ServiceDrinks from '../services/service-drinks';
 import DrinksUpdateDTO from '../dtos/Drinks/dto-update-drinks';
 import CreateDrinksDTO from '../dtos/Drinks/dto-create-drinks';
-
+import { getFromCache } from '../utils/cache';
+import { setFromCache } from '../utils/cache';
 
 export default class ControllerDrinks {
     private serviceDrinks: ServiceDrinks;
@@ -35,6 +34,11 @@ export default class ControllerDrinks {
         try {
             const drinks = await this.serviceDrinks.getAllService();
             if (!drinks || drinks.length <= 0) return res.json({ message: 'No drinks found in the database', status: 404 });
+
+            const cacheDrinks = await getFromCache('bebidas');
+            if(!cacheDrinks) {
+                await setFromCache('bebidas', drinks);
+            }
 
             return res.json({
                 message: 'Find all drinks successfully',

@@ -1,9 +1,10 @@
 import { Response, Request } from "express";
 import ServicePromocoes from "../services/service-promocoes";
 import InterfaceResponsePromotions from "../interfaces/Promotions/interface-response";
-import { PromotionsDTO } from "../dtos/Promotions/dto-get-promo";
 import CreatePromototionsDTO from "../dtos/Promotions/dto-create-promo";
 import PromotionsUpdateDTO from "../dtos/Promotions/dto-update-promo";
+import { getFromCache } from "../utils/cache";
+import { setFromCache } from "../utils/cache";
 
 export default class ControllersPromocoes {
     private servicePromotions: ServicePromocoes;
@@ -35,7 +36,12 @@ export default class ControllersPromocoes {
             const promotions = await this.servicePromotions.getAllService();
             if (!promotions || promotions.length <= 0) return res.json({ message: 'No promotions found in the database', status: 404 });
 
-
+            
+            const cachePromotoions = await getFromCache('promoções');
+            if(!cachePromotoions) {
+                await setFromCache('promoções', promotions);
+            }
+            
             return res.json({
                 message: 'Find all promotions successfully',
                 status: 200,

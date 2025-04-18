@@ -15,6 +15,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const service_drinks_1 = __importDefault(require("../services/service-drinks"));
 const dto_update_drinks_1 = __importDefault(require("../dtos/Drinks/dto-update-drinks"));
 const dto_create_drinks_1 = __importDefault(require("../dtos/Drinks/dto-create-drinks"));
+const cache_1 = require("../utils/cache");
+const cache_2 = require("../utils/cache");
 class ControllerDrinks {
     constructor() {
         this.serviceDrinks = new service_drinks_1.default();
@@ -43,6 +45,10 @@ class ControllerDrinks {
                 const drinks = yield this.serviceDrinks.getAllService();
                 if (!drinks || drinks.length <= 0)
                     return res.json({ message: 'No drinks found in the database', status: 404 });
+                const cacheDrinks = yield (0, cache_1.getFromCache)('bebidas');
+                if (!cacheDrinks) {
+                    yield (0, cache_2.setFromCache)('bebidas', drinks);
+                }
                 return res.json({
                     message: 'Find all drinks successfully',
                     status: 200,

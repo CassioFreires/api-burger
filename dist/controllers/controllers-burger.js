@@ -17,6 +17,7 @@ const dto_burgers_1 = require("../dtos/Burgers/dto-burgers");
 const dto_update_burgers_1 = __importDefault(require("../dtos/Burgers/dto-update-burgers"));
 const dto_create_burgers_1 = __importDefault(require("../dtos/Burgers/dto-create-burgers"));
 const dto_delete_burgers_1 = __importDefault(require("../dtos/Burgers/dto-delete-burgers"));
+const cache_1 = require("../utils/cache");
 class ControllerBurger {
     constructor() {
         this.serviceBurger = new services_burgers_1.default();
@@ -45,6 +46,10 @@ class ControllerBurger {
                 const burgers = yield this.serviceBurger.getAllService();
                 if (!burgers || burgers.length <= 0)
                     return res.json({ message: 'No burgers found in the database', status: 404 });
+                const cachedHamburgers = yield (0, cache_1.getFromCache)('hamburguers');
+                if (!cachedHamburgers) {
+                    yield (0, cache_1.setFromCache)('hamburguers', burgers);
+                }
                 return res.json({
                     message: 'Find all burgers successfully',
                     status: 200,

@@ -15,6 +15,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const service_promocoes_1 = __importDefault(require("../services/service-promocoes"));
 const dto_create_promo_1 = __importDefault(require("../dtos/Promotions/dto-create-promo"));
 const dto_update_promo_1 = __importDefault(require("../dtos/Promotions/dto-update-promo"));
+const cache_1 = require("../utils/cache");
+const cache_2 = require("../utils/cache");
 class ControllersPromocoes {
     constructor() {
         this.servicePromotions = new service_promocoes_1.default();
@@ -43,6 +45,10 @@ class ControllersPromocoes {
                 const promotions = yield this.servicePromotions.getAllService();
                 if (!promotions || promotions.length <= 0)
                     return res.json({ message: 'No promotions found in the database', status: 404 });
+                const cachePromotoions = yield (0, cache_1.getFromCache)('promoções');
+                if (!cachePromotoions) {
+                    yield (0, cache_2.setFromCache)('promoções', promotions);
+                }
                 return res.json({
                     message: 'Find all promotions successfully',
                     status: 200,

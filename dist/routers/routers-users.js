@@ -24,6 +24,9 @@ usersRouter.post('/register', (req, res) => __awaiter(void 0, void 0, void 0, fu
 usersRouter.post('/login', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     return yield controllerUsers.login(req, res);
 }));
+usersRouter.post('/verify-2fa', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    return yield controllerUsers.verify2fa(req, res);
+}));
 // 
 usersRouter.get('/getAll', authMiddleware_1.AuthMiddleware, (0, RoleMiddleware_1.RoleMiddleware)(['Admin']), (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     return yield controllerUsers.getAll(req, res);

@@ -1,10 +1,10 @@
-import express from 'express';
 import { Request, Response } from 'express';
 import InterfaceResponseCombos from '../interfaces/Combos/interface-response';
-import { CombosDTO } from '../dtos/Combos/dto-get-combos';
 import ServiceCombos from '../services/service-combos';
 import CombosUpdateDTO from '../dtos/Combos/dto-update-combos';
 import CreateCombosDTO from '../dtos/Combos/dto-create.combos';
+import { getFromCache } from '../utils/cache';
+import { setFromCache } from '../utils/cache';
 
 export default class ControllerCombos {
     private serviceCombos: ServiceCombos;
@@ -34,6 +34,11 @@ export default class ControllerCombos {
         try {
             const combos = await this.serviceCombos.getAllService();
             if (!combos || combos.length <= 0) return res.json({ message: 'No combos found in the database', status: 404 });
+
+            const cacheCombos = await getFromCache('combos');
+            if(!cacheCombos) {
+                await setFromCache('combos', combos);
+            }
 
             return res.json({
                 message: 'Find all combos successfully',

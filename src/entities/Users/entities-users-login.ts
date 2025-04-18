@@ -22,5 +22,11 @@ export default class LoginEntities implements InterfaceLogin {
 
     @Column({ default: true })
     active!: boolean;
+
+    @Column()
+    phoneNumber!: string;
+
+    @Column()
+    is2FAEnabled!: boolean;
 }
 

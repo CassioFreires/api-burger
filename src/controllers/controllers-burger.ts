@@ -5,6 +5,7 @@ import { BurgersDTO } from "../dtos/Burgers/dto-burgers";
 import BurgersUpdateDTO from "../dtos/Burgers/dto-update-burgers";
 import CreateBurgersDTO from "../dtos/Burgers/dto-create-burgers";
 import DeleteBurgersDTO from "../dtos/Burgers/dto-delete-burgers";
+import { getFromCache, setFromCache } from "../utils/cache";
 
 export default class ControllerBurger {
     private serviceBurger: ServiceBurger;
@@ -35,6 +36,11 @@ export default class ControllerBurger {
         try {
             const burgers = await this.serviceBurger.getAllService();
             if (!burgers || burgers.length <= 0) return res.json({ message: 'No burgers found in the database', status: 404 });
+
+            const cachedHamburgers = await getFromCache('hamburguers');
+            if(!cachedHamburgers) {
+                await setFromCache('hamburguers', burgers);
+            }
 
             return res.json({
                 message: 'Find all burgers successfully',

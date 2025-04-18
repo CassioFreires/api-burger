@@ -15,6 +15,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const service_combos_1 = __importDefault(require("../services/service-combos"));
 const dto_update_combos_1 = __importDefault(require("../dtos/Combos/dto-update-combos"));
 const dto_create_combos_1 = __importDefault(require("../dtos/Combos/dto-create.combos"));
+const cache_1 = require("../utils/cache");
+const cache_2 = require("../utils/cache");
 class ControllerCombos {
     constructor() {
         this.serviceCombos = new service_combos_1.default();
@@ -43,6 +45,10 @@ class ControllerCombos {
                 const combos = yield this.serviceCombos.getAllService();
                 if (!combos || combos.length <= 0)
                     return res.json({ message: 'No combos found in the database', status: 404 });
+                const cacheCombos = yield (0, cache_1.getFromCache)('combos');
+                if (!cacheCombos) {
+                    yield (0, cache_2.setFromCache)('combos', combos);
+                }
                 return res.json({
                     message: 'Find all combos successfully',
                     status: 200,

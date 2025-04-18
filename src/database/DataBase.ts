@@ -87,9 +87,9 @@ export default class DataBase {
                 OrderEntitiesGetAll
             ],
             synchronize: false,
-            logging: true,
+            logging: false,
             extra: {
-                connectionLimit: 20 // ajuste conforme capacidade do servidor
+                connectionLimit: 200 // ajuste conforme capacidade do servidor
             }
         });
 

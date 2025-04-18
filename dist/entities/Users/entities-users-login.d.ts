@@ -7,4 +7,6 @@ export default class LoginEntities implements InterfaceLogin {
     password_hash: string;
     roles: RoleEntities;
     active: boolean;
+    phoneNumber: string;
+    is2FAEnabled: boolean;
 }

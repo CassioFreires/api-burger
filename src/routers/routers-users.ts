@@ -14,6 +14,10 @@ usersRouter.post('/login', async(req:Request, res:Response) => {
     return await controllerUsers.login(req, res);
 });
 
+usersRouter.post('/verify-2fa', async(req:Request, res:Response) => {
+    return await controllerUsers.verify2fa(req, res);
+});
+
 // 
 usersRouter.get('/getAll', AuthMiddleware, RoleMiddleware(['Admin']),  async(req: Request, res: Response) => {
     return await controllerUsers.getAll(req, res);

@@ -41,6 +41,14 @@ __decorate([
     (0, typeorm_1.Column)({ default: true }),
     __metadata("design:type", Boolean)
 ], LoginEntities.prototype, "active", void 0);
+__decorate([
+    (0, typeorm_1.Column)(),
+    __metadata("design:type", String)
+], LoginEntities.prototype, "phoneNumber", void 0);
+__decorate([
+    (0, typeorm_1.Column)(),
+    __metadata("design:type", Boolean)
+], LoginEntities.prototype, "is2FAEnabled", void 0);
 LoginEntities = __decorate([
     (0, typeorm_1.Entity)('users')
 ], LoginEntities);
